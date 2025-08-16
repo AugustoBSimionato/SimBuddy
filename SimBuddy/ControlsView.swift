@@ -13,7 +13,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     private var popover: NSPopover?
     
     func applicationDidFinishLaunching(_ notification: Notification) {
-        NSApp.setActivationPolicy(.accessory)
+        NSApp.setActivationPolicy(.regular)
         
         statusItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.variableLength)
         statusItem.button?.title = "📱"
@@ -88,25 +88,9 @@ struct ControlsView: View {
                 
                 // Refresh Settings
                 HStack {
-                    Toggle("Auto-refresh every 5 minutes", isOn: $vm.autoRefreshEnabled)
-                        .toggleStyle(SwitchToggleStyle())
-                        .help("Automatically refresh the simulator list every 5 minutes")
-                    
-                    Spacer()
-                    
                     Toggle("Refresh on new simulator detected", isOn: $vm.refreshOnNewDevice)
                         .toggleStyle(SwitchToggleStyle())
                         .help("Automatically refresh when a new simulator is detected")
-                }
-                .font(.caption)
-                
-                // Status info
-                HStack {
-                    if vm.autoRefreshEnabled {
-                        Text("Next refresh: \(vm.nextRefreshTime)")
-                            .font(.caption2)
-                            .foregroundColor(.secondary)
-                    }
                     
                     Spacer()
                     
@@ -116,6 +100,7 @@ struct ControlsView: View {
                             .foregroundColor(.secondary)
                     }
                 }
+                .font(.caption)
             }
             
             // Custom selectable list instead of List with selection
@@ -176,6 +161,7 @@ struct ControlsView: View {
                     TextField("e.g. 9:41 or 15:42", text: $vm.time)
                         .textFieldStyle(.roundedBorder)
                         .frame(width: 160)
+                        .focusable(false)
                     Toggle("Set", isOn: $vm.setTime)
                 }
                 
@@ -185,7 +171,6 @@ struct ControlsView: View {
                         Text("charged").tag("charged")
                         Text("charging").tag("charging")
                         Text("discharging").tag("discharging")
-                        Text("unknown").tag("unknown")
                     }.frame(width: 160)
                     Toggle("Set", isOn: $vm.setBatteryState)
                     
@@ -202,7 +187,6 @@ struct ControlsView: View {
                         Text("active").tag("active")
                         Text("failed").tag("failed")
                         Text("searching").tag("searching")
-                        Text("inactive").tag("inactive")
                     }.frame(width: 130)
                     Picker("Bars", selection: $vm.wifiBars) {
                         ForEach(0..<4) { Text("\($0)").tag($0) }
@@ -216,7 +200,6 @@ struct ControlsView: View {
                         Text("active").tag("active")
                         Text("searching").tag("searching")
                         Text("failed").tag("failed")
-                        Text("inactive").tag("inactive")
                     }.frame(width: 130)
                     Picker("Bars", selection: $vm.cellularBars) {
                         ForEach(0..<5) { Text("\($0)").tag($0) }
@@ -232,7 +215,6 @@ struct ControlsView: View {
                         Text("4g").tag("4g")
                         Text("3g").tag("3g")
                         Text("edge").tag("edge")
-                        Text("none").tag("none")
                     }.frame(width: 160)
                     Toggle("Set", isOn: $vm.setDataNetwork)
                 }
@@ -242,6 +224,7 @@ struct ControlsView: View {
                     TextField("Carrier name", text: $vm.operatorName)
                         .textFieldStyle(.roundedBorder)
                         .frame(width: 200)
+                        .focusable(false)
                     Toggle("Set", isOn: $vm.setOperatorName)
                 }
             }
@@ -267,10 +250,10 @@ struct ControlsView: View {
         .padding(16)
         .onAppear { 
             vm.refreshBootedDevices()
-            vm.startAutoRefreshIfNeeded()
+            vm.startDeviceMonitoringIfNeeded()
         }
         .onDisappear {
-            vm.stopAutoRefresh()
+            vm.stopDeviceMonitoring()
         }
     }
 }
@@ -291,6 +274,11 @@ struct DeviceRow: View {
                 }
                 .buttonStyle(PlainButtonStyle())
             }
+            
+            // Device icon
+            Image(systemName: device.iconName)
+                .foregroundColor(.blue)
+                .frame(width: 16, height: 16)
             
             HStack {
                 Text(device.name)
@@ -325,26 +313,15 @@ final class ControlsViewModel: ObservableObject {
     @Published var applyToAllBooted: Bool = true
     
     // Refresh settings
-    @Published var autoRefreshEnabled: Bool = false {
-        didSet {
-            if autoRefreshEnabled {
-                startAutoRefresh()
-            } else {
-                stopAutoRefresh()
-            }
-        }
-    }
-    
     @Published var refreshOnNewDevice: Bool = true
     @Published var lastRefreshTime: Date?
-    @Published var nextRefreshTime: String = ""
     
     // Controls
     @Published var setTime = true
     @Published var time: String = "9:41"
     
     @Published var setBatteryState = true
-    @Published var batteryState: String = "charged"
+    @Published var batteryState: String = "discharging"
     
     @Published var setBatteryLevel = true
     @Published var batteryLevel: Double = 100
@@ -365,8 +342,7 @@ final class ControlsViewModel: ObservableObject {
     
     @Published var statusMessage: String = ""
     
-    // Private properties for auto-refresh
-    private var autoRefreshTimer: Timer?
+    // Private properties for device monitoring
     private var deviceMonitorTimer: Timer?
     private var previousDeviceCount: Int = 0
     private var previousDeviceUDIDs: Set<String> = []
@@ -380,7 +356,7 @@ final class ControlsViewModel: ObservableObject {
     }
     
     deinit {
-        stopAutoRefresh()
+        stopDeviceMonitoring()
     }
     
     func toggleDeviceSelection(_ udid: String) {
@@ -411,35 +387,11 @@ final class ControlsViewModel: ObservableObject {
         }
     }
     
-    // MARK: - Auto Refresh Logic
+    // MARK: - Device Monitoring Logic
     
-    func startAutoRefreshIfNeeded() {
-        if autoRefreshEnabled {
-            startAutoRefresh()
-        }
+    func startDeviceMonitoringIfNeeded() {
         if refreshOnNewDevice {
             startDeviceMonitoring()
-        }
-    }
-    
-    private func startAutoRefresh() {
-        stopAutoRefresh() // Stop any existing timer
-        
-        guard autoRefreshEnabled else { return }
-        
-        autoRefreshTimer = Timer.scheduledTimer(withTimeInterval: 300, repeats: true) { [weak self] _ in
-            self?.refreshBootedDevices()
-        }
-        
-        updateNextRefreshTime()
-        
-        // Update next refresh time every second
-        Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { [weak self] timer in
-            guard self?.autoRefreshEnabled == true else {
-                timer.invalidate()
-                return
-            }
-            self?.updateNextRefreshTime()
         }
     }
     
@@ -451,30 +403,9 @@ final class ControlsViewModel: ObservableObject {
         }
     }
     
-    func stopAutoRefresh() {
-        autoRefreshTimer?.invalidate()
-        autoRefreshTimer = nil
+    func stopDeviceMonitoring() {
         deviceMonitorTimer?.invalidate()
         deviceMonitorTimer = nil
-        nextRefreshTime = ""
-    }
-    
-    private func updateNextRefreshTime() {
-        guard let lastRefresh = lastRefreshTime else {
-            nextRefreshTime = "Calculating..."
-            return
-        }
-        
-        let nextRefresh = lastRefresh.addingTimeInterval(300) // 5 minutes = 300 seconds
-        let timeRemaining = nextRefresh.timeIntervalSinceNow
-        
-        if timeRemaining <= 0 {
-            nextRefreshTime = "Now"
-        } else {
-            let minutes = Int(timeRemaining) / 60
-            let seconds = Int(timeRemaining) % 60
-            nextRefreshTime = String(format: "%d:%02d", minutes, seconds)
-        }
     }
     
     private func checkForNewDevices() {
@@ -651,6 +582,24 @@ struct Device: Identifiable, Hashable {
     let name: String
     let udid: String
     let runtime: String
+    
+    var iconName: String {
+        let lowercaseName = name.lowercased()
+        
+        if lowercaseName.contains("iphone") {
+            return "iphone"
+        } else if lowercaseName.contains("ipad") {
+            return "ipad"
+        } else if lowercaseName.contains("watch") {
+            return "applewatch"
+        } else if lowercaseName.contains("tv") {
+            return "appletv"
+        } else if lowercaseName.contains("vision") {
+            return "visionpro"
+        } else {
+            return "rectangle.on.rectangle" // Generic device icon
+        }
+    }
 }
 
 enum DeviceParser {
