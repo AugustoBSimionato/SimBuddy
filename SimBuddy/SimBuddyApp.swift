@@ -8,10 +8,14 @@
 import SwiftUI
 
 @main
-struct SimBuddyApp: App {
+struct SimStatusBarApp: App {
+    @NSApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
+
     var body: some Scene {
-        WindowGroup {
-            ContentView()
+        WindowGroup("Simulator Status Controls") {
+            ControlsView()
         }
+        .windowStyle(.titleBar)
+        .defaultSize(width: 600, height: 520)
     }
 }
