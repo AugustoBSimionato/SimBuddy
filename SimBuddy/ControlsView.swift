@@ -8,253 +8,273 @@
 import SwiftUI
 import Combine
 
-final class AppDelegate: NSObject, NSApplicationDelegate {
-    private var statusItem: NSStatusItem!
-    private var popover: NSPopover?
-    
-    func applicationDidFinishLaunching(_ notification: Notification) {
-        NSApp.setActivationPolicy(.regular)
-        
-        statusItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.variableLength)
-        statusItem.button?.title = "📱"
-        statusItem.button?.action = #selector(toggleMenu(_:))
-        statusItem.button?.target = self
-    }
-    
-    @objc private func toggleMenu(_ sender: Any?) {
-        let menu = NSMenu()
-        
-        menu.addItem(withTitle: "Apply Preset (9:41, 100%, full bars)", action: #selector(applyPreset), keyEquivalent: "")
-        menu.addItem(withTitle: "Clear Overrides", action: #selector(clearOverrides), keyEquivalent: "")
-        menu.addItem(.separator())
-        menu.addItem(withTitle: "Open Controls…", action: #selector(openControls), keyEquivalent: "")
-        menu.addItem(withTitle: "Quit", action: #selector(quit), keyEquivalent: "q")
-        
-        statusItem.menu = menu
-        statusItem.button?.performClick(nil)
-        statusItem.menu = nil
-    }
-    
-    @objc private func applyPreset() {
-        _ = Shell.runSimctlStatusBarAllBootedOverride(options: [
-            "--time", "9:41",
-            "--dataNetwork", "wifi",
-            "--wifiMode", "active",
-            "--wifiBars", "3",
-            "--cellularMode", "active",
-            "--cellularBars", "4",
-            "--batteryState", "charged",
-            "--batteryLevel", "100"
-        ])
-    }
-    
-    @objc private func clearOverrides() {
-        _ = Shell.clearStatusBarAllBooted()
-    }
-    
-    @objc private func openControls() {
-        for w in NSApp.windows {
-            if let title = w.title as String?, title.contains("Simulator Status Controls") {
-                w.makeKeyAndOrderFront(nil)
-                NSApp.activate(ignoringOtherApps: true)
-                return
-            }
-        }
-        NSApp.activate(ignoringOtherApps: true)
-        NSApplication.shared.windows.first?.makeKeyAndOrderFront(nil)
-    }
-    
-    @objc private func quit() {
-        NSApp.terminate(nil)
-    }
-}
-
 struct ControlsView: View {
     @StateObject private var vm = ControlsViewModel()
     
     var body: some View {
-        VStack(alignment: .leading, spacing: 16) {
-            Text("Booted Simulators")
-                .font(.headline)
-            
-            VStack(alignment: .leading, spacing: 8) {
-                HStack {
-                    Button("Refresh") { vm.refreshBootedDevices() }
-                    Spacer()
-                    Toggle("Apply to all booted", isOn: $vm.applyToAllBooted)
-                        .toggleStyle(SwitchToggleStyle())
-                        .help("When on, applies to 'booted' (all running simulators); otherwise, only to selected UDIDs.")
-                }
-                
-                // Refresh Settings
-                HStack {
-                    Toggle("Refresh on new simulator detected", isOn: $vm.refreshOnNewDevice)
-                        .toggleStyle(SwitchToggleStyle())
-                        .help("Automatically refresh when a new simulator is detected")
-                    
-                    Spacer()
-                    
-                    if vm.lastRefreshTime != nil {
-                        Text("Last updated: \(vm.lastRefreshTimeFormatted)")
-                            .font(.caption2)
-                            .foregroundColor(.secondary)
-                    }
-                }
-                .font(.caption)
-            }
-            
-            // Custom selectable list instead of List with selection
-            if vm.bootedDevices.isEmpty {
-                Text("No booted simulators found")
-                    .foregroundColor(.secondary)
-                    .frame(height: 150)
-                    .frame(maxWidth: .infinity)
-            } else {
-                VStack(spacing: 0) {
-                    // Header showing selection info when not applying to all
-                    if !vm.applyToAllBooted {
-                        HStack {
-                            Text("Select simulators to apply overrides to:")
-                                .font(.caption)
-                                .foregroundColor(.secondary)
+        ScrollView {
+            VStack(alignment: .leading, spacing: 18) {
+                SectionCard(systemImage: "iphone.and.arrow.forward", title: "Booted Simulators") {
+                    VStack(alignment: .leading, spacing: 10) {
+                        HStack(spacing: 8) {
+                            Button(action: { vm.refreshBootedDevices() }) {
+                                Label("Refresh", systemImage: "arrow.clockwise")
+                            }
+                            .buttonStyle(.bordered)
+                            .controlSize(.small)
+                            
                             Spacer()
-                            Text("\(vm.selectedUDIDs.count) selected")
-                                .font(.caption)
-                                .foregroundColor(.secondary)
+                            
+                            Toggle("Apply to all booted", isOn: $vm.applyToAllBooted)
+                                .toggleStyle(SwitchToggleStyle())
+                                .help("When on, applies to 'booted' (all running simulators); otherwise, only to selected UDIDs.")
+                                .controlSize(.small)
                         }
-                        .padding(.horizontal, 8)
-                        .padding(.vertical, 4)
-                        .background(Color(NSColor.controlBackgroundColor))
-                    }
-                    
-                    ScrollView {
-                        LazyVStack(spacing: 2) {
-                            ForEach(vm.bootedDevices, id: \.udid) { device in
-                                DeviceRow(
-                                    device: device,
-                                    isSelected: vm.selectedUDIDs.contains(device.udid),
-                                    isSelectable: !vm.applyToAllBooted,
-                                    onToggle: { vm.toggleDeviceSelection(device.udid) }
-                                )
+                        
+                        HStack {
+                            Toggle("Refresh on new simulator detected", isOn: $vm.refreshOnNewDevice)
+                                .toggleStyle(SwitchToggleStyle())
+                                .help("Automatically refresh when a new simulator is detected")
+                                .controlSize(.small)
+                            
+                            Spacer()
+                            
+                            if vm.lastRefreshTime != nil {
+                                Text("Last updated: \(vm.lastRefreshTimeFormatted)")
+                                    .font(.caption2)
+                                    .foregroundColor(.secondary)
                             }
                         }
-                        .padding(.vertical, 4)
+                        .font(.caption)
+                        
+                        if vm.bootedDevices.isEmpty {
+                            VStack {
+                                Text("No booted simulators found")
+                                    .foregroundColor(.secondary)
+                                    .padding(.vertical, 40)
+                            }
+                            .frame(maxWidth: .infinity)
+                            .background(Color.clear)
+                        } else {
+                            VStack(spacing: 0) {
+                                if !vm.applyToAllBooted {
+                                    HStack {
+                                        Text("Select simulators to apply overrides to:")
+                                            .font(.caption)
+                                            .foregroundColor(.secondary)
+                                        Spacer()
+                                        Text("\(vm.selectedUDIDs.count) selected")
+                                            .font(.caption)
+                                            .foregroundColor(.secondary)
+                                    }
+                                    .padding(.horizontal, 8)
+                                    .padding(.vertical, 6)
+                                    .background(Color(NSColor.controlBackgroundColor))
+                                }
+                                
+                                ScrollView {
+                                    LazyVStack(spacing: 6) {
+                                        ForEach(vm.bootedDevices, id: \.udid) { device in
+                                            DeviceRow(
+                                                device: device,
+                                                isSelected: vm.selectedUDIDs.contains(device.udid),
+                                                isSelectable: !vm.applyToAllBooted,
+                                                onToggle: { vm.toggleDeviceSelection(device.udid) }
+                                            )
+                                            .animation(.default, value: vm.selectedUDIDs)
+                                        }
+                                    }
+                                    .padding(.vertical, 6)
+                                }
+                                .frame(maxHeight: 220)
+                            }
+                            .frame(maxWidth: .infinity)
+                            .background(Color(NSColor.textBackgroundColor))
+                            .cornerRadius(6)
+                            .overlay(
+                                RoundedRectangle(cornerRadius: 6)
+                                    .stroke(Color(NSColor.separatorColor), lineWidth: 1)
+                            )
+                        }
                     }
+                    .padding(12)
                 }
-                .frame(height: 150)
-                .background(Color(NSColor.textBackgroundColor))
-                .cornerRadius(6)
-                .overlay(
-                    RoundedRectangle(cornerRadius: 6)
-                        .stroke(Color(NSColor.separatorColor), lineWidth: 1)
-                )
+                
+                SectionCard(systemImage: "slider.horizontal.3", title: "Overrides") {
+                    VStack(spacing: 12) {
+                        VStack(spacing: 8) {
+                            HStack {
+                                Text("Time")
+                                    .frame(width: 80, alignment: .leading)
+                                TextField("e.g. 9:41 or 15:42", text: $vm.time)
+                                    .textFieldStyle(.roundedBorder)
+                                    .frame(width: 160)
+                                    .focusable(false)
+                                Toggle("Set", isOn: $vm.setTime)
+                                    .controlSize(.small)
+                                Spacer()
+                            }
+                            
+                            HStack(spacing: 12) {
+                                Text("Battery")
+                                    .frame(width: 80, alignment: .leading)
+                                VStack(alignment: .leading, spacing: 6) {
+                                    HStack {
+                                        Picker("Status", selection: $vm.batteryState) {
+                                            Text("charged").tag("charged")
+                                            Text("charging").tag("charging")
+                                            Text("discharging").tag("discharging")
+                                        }
+                                        .frame(width: 170)
+                                        Toggle("Set", isOn: $vm.setBatteryState)
+                                            .controlSize(.small)
+                                    }
+                                    HStack {
+                                        Text("Level")
+                                        Slider(value: $vm.batteryLevel, in: 0...100, step: 5)
+                                            .frame(width: 220)
+                                        Text("\(Int(vm.batteryLevel))%")
+                                            .frame(width: 42, alignment: .trailing)
+                                        Toggle("Set", isOn: $vm.setBatteryLevel)
+                                            .controlSize(.small)
+                                    }
+                                }
+                                Spacer()
+                            }
+                            
+                            HStack(spacing: 12) {
+                                Text("Wi‑Fi")
+                                    .frame(width: 80, alignment: .leading)
+                                Picker("Mode", selection: $vm.wifiMode) {
+                                    Text("active").tag("active")
+                                    Text("failed").tag("failed")
+                                    Text("searching").tag("searching")
+                                }
+                                .frame(width: 140)
+                                Picker("Bars", selection: $vm.wifiBars) {
+                                    ForEach(0..<4) { Text("\($0)").tag($0) }
+                                }
+                                .frame(width: 80)
+                                Toggle("Set", isOn: $vm.setWifi)
+                                    .controlSize(.small)
+                                Spacer()
+                            }
+                            
+                            HStack(spacing: 12) {
+                                Text("Cellular")
+                                    .frame(width: 80, alignment: .leading)
+                                Picker("Mode", selection: $vm.cellularMode) {
+                                    Text("active").tag("active")
+                                    Text("searching").tag("searching")
+                                    Text("failed").tag("failed")
+                                }
+                                .frame(width: 140)
+                                Picker("Bars", selection: $vm.cellularBars) {
+                                    ForEach(0..<5) { Text("\($0)").tag($0) }
+                                }
+                                .frame(width: 80)
+                                Toggle("Set", isOn: $vm.setCellular)
+                                    .controlSize(.small)
+                                Spacer()
+                            }
+                            
+                            HStack(spacing: 12) {
+                                Text("Data")
+                                    .frame(width: 80, alignment: .leading)
+                                Picker("Type", selection: $vm.dataNetwork) {
+                                    Text("wifi").tag("wifi")
+                                    Text("lte").tag("lte")
+                                    Text("4g").tag("4g")
+                                    Text("3g").tag("3g")
+                                }
+                                .frame(width: 123)
+                                Toggle("Set", isOn: $vm.setDataNetwork)
+                                    .controlSize(.small)
+                                Spacer()
+                            }
+                            
+                            HStack {
+                                Text("Operator")
+                                    .frame(width: 80, alignment: .leading)
+                                TextField("Carrier name", text: $vm.operatorName)
+                                    .textFieldStyle(.roundedBorder)
+                                    .frame(width: 220)
+                                    .focusable(false)
+                                Toggle("Set", isOn: $vm.setOperatorName)
+                                    .controlSize(.small)
+                                Spacer()
+                            }
+                        }
+                        
+                        HStack {
+                            Button(action: { vm.applyOverrides() }) {
+                                Label("Apply Overrides", systemImage: "wand.and.stars")
+                            }
+                            .buttonStyle(.borderedProminent)
+                            .disabled(!vm.applyToAllBooted && vm.selectedUDIDs.isEmpty)
+                            
+                            Button(action: { vm.clearOverrides() }) {
+                                Label("Clear Overrides", systemImage: "xmark.circle")
+                            }
+                            .buttonStyle(.bordered)
+                            .disabled(!vm.applyToAllBooted && vm.selectedUDIDs.isEmpty)
+                            
+                            Spacer()
+                            
+                            Text(vm.statusMessage)
+                                .foregroundColor(.secondary)
+                                .lineLimit(2)
+                                .truncationMode(.middle)
+                                .font(.caption)
+                        }
+                    }
+                    .padding(12)
+                }
             }
-            
-            Divider()
-            
-            Text("Overrides")
-                .font(.headline)
-            
-            Form {
-                HStack {
-                    Text("Time")
-                    TextField("e.g. 9:41 or 15:42", text: $vm.time)
-                        .textFieldStyle(.roundedBorder)
-                        .frame(width: 160)
-                        .focusable(false)
-                    Toggle("Set", isOn: $vm.setTime)
-                }
-                
-                HStack {
-                    Text("Battery State")
-                    Picker("", selection: $vm.batteryState) {
-                        Text("charged").tag("charged")
-                        Text("charging").tag("charging")
-                        Text("discharging").tag("discharging")
-                    }.frame(width: 160)
-                    Toggle("Set", isOn: $vm.setBatteryState)
-                    
-                    Text("Battery Level")
-                    Slider(value: $vm.batteryLevel, in: 0...100, step: 1)
-                        .frame(width: 180)
-                    Text("\(Int(vm.batteryLevel))%")
-                    Toggle("Set", isOn: $vm.setBatteryLevel)
-                }
-                
-                HStack {
-                    Text("Wi‑Fi")
-                    Picker("Mode", selection: $vm.wifiMode) {
-                        Text("active").tag("active")
-                        Text("failed").tag("failed")
-                        Text("searching").tag("searching")
-                    }.frame(width: 130)
-                    Picker("Bars", selection: $vm.wifiBars) {
-                        ForEach(0..<4) { Text("\($0)").tag($0) }
-                    }.frame(width: 80)
-                    Toggle("Set", isOn: $vm.setWifi)
-                }
-                
-                HStack {
-                    Text("Cellular")
-                    Picker("Mode", selection: $vm.cellularMode) {
-                        Text("active").tag("active")
-                        Text("searching").tag("searching")
-                        Text("failed").tag("failed")
-                    }.frame(width: 130)
-                    Picker("Bars", selection: $vm.cellularBars) {
-                        ForEach(0..<5) { Text("\($0)").tag($0) }
-                    }.frame(width: 80)
-                    Toggle("Set", isOn: $vm.setCellular)
-                }
-                
-                HStack {
-                    Text("Data Network")
-                    Picker("", selection: $vm.dataNetwork) {
-                        Text("wifi").tag("wifi")
-                        Text("lte").tag("lte")
-                        Text("4g").tag("4g")
-                        Text("3g").tag("3g")
-                        Text("edge").tag("edge")
-                    }.frame(width: 160)
-                    Toggle("Set", isOn: $vm.setDataNetwork)
-                }
-                
-                HStack {
-                    Text("Operator")
-                    TextField("Carrier name", text: $vm.operatorName)
-                        .textFieldStyle(.roundedBorder)
-                        .frame(width: 200)
-                        .focusable(false)
-                    Toggle("Set", isOn: $vm.setOperatorName)
-                }
-            }
-            
-            HStack {
-                Button("Apply Overrides") { 
-                    vm.applyOverrides() 
-                }
-                .disabled(!vm.applyToAllBooted && vm.selectedUDIDs.isEmpty)
-                
-                Button("Clear Overrides") { 
-                    vm.clearOverrides() 
-                }
-                .disabled(!vm.applyToAllBooted && vm.selectedUDIDs.isEmpty)
-                
-                Spacer()
-                Text(vm.statusMessage)
-                    .foregroundColor(.secondary)
-                    .lineLimit(2)
-                    .truncationMode(.middle)
-            }
+            .padding(16)
+            .frame(maxWidth: .infinity)
         }
-        .padding(16)
-        .onAppear { 
+        .onAppear {
             vm.refreshBootedDevices()
             vm.startDeviceMonitoringIfNeeded()
         }
         .onDisappear {
             vm.stopDeviceMonitoring()
         }
+    }
+}
+
+// MARK: - SectionCard helper
+private struct SectionCard<Content: View>: View {
+    let systemImage: String
+    let title: String
+    let content: Content
+    
+    init(systemImage: String, title: String, @ViewBuilder content: () -> Content) {
+        self.systemImage = systemImage
+        self.title = title
+        self.content = content()
+    }
+    
+    var body: some View {
+        VStack(alignment: .leading, spacing: 8) {
+            HStack(spacing: 8) {
+                Image(systemName: systemImage)
+                    .foregroundStyle(.blue)
+                Text(title)
+                    .font(.headline)
+                Spacer()
+            }
+            .padding([.top, .leading])
+            content
+        }
+        .background(.regularMaterial)
+        .cornerRadius(10)
+        .overlay(
+            RoundedRectangle(cornerRadius: 10)
+                .stroke(Color(NSColor.separatorColor).opacity(0.6), lineWidth: 0.5)
+        )
+        .shadow(color: Color.black.opacity(0.03), radius: 6, x: 0, y: 2)
     }
 }
 
@@ -266,244 +286,54 @@ struct DeviceRow: View {
     let onToggle: () -> Void
     
     var body: some View {
-        HStack {
+        HStack(spacing: 12) {
             if isSelectable {
                 Button(action: onToggle) {
-                    Image(systemName: isSelected ? "checkmark.square.fill" : "square")
-                        .foregroundColor(isSelected ? .blue : .secondary)
+                    Image(systemName: isSelected ? "checkmark.circle.fill" : "circle")
+                        .foregroundColor(isSelected ? .accentColor : .secondary)
+                        .imageScale(.large)
                 }
                 .buttonStyle(PlainButtonStyle())
             }
             
-            // Device icon
             Image(systemName: device.iconName)
+                .resizable()
+                .scaledToFit()
+                .frame(width: 22, height: 22)
                 .foregroundColor(.blue)
-                .frame(width: 16, height: 16)
+                .padding(6)
+                .background(RoundedRectangle(cornerRadius: 6).fill(Color.blue.opacity(0.08)))
             
-            HStack {
+            VStack(alignment: .leading, spacing: 2) {
                 Text(device.name)
-                Spacer()
-                Text(device.runtime)
-                    .foregroundColor(.secondary)
-                    .font(.caption)
-                Text(device.udid.short)
-                    .foregroundColor(.secondary)
-                    .font(.caption)
-            }
-            .contentShape(Rectangle())
-            .onTapGesture {
-                if isSelectable {
-                    onToggle()
+                    .font(.subheadline)
+                HStack(spacing: 8) {
+                    Text(device.runtime)
+                        .foregroundColor(.secondary)
+                        .font(.caption2)
+                    Text(device.udid.short)
+                        .foregroundColor(.secondary)
+                        .font(.caption2)
                 }
             }
-        }
-        .padding(.horizontal, 8)
-        .padding(.vertical, 4)
-        .background(
-            Rectangle()
-                .fill(isSelected && isSelectable ? Color.blue.opacity(0.1) : Color.clear)
-        )
-        .opacity(isSelectable ? 1.0 : 0.7)
-    }
-}
-
-final class ControlsViewModel: ObservableObject {
-    @Published var bootedDevices: [Device] = []
-    @Published var selectedUDIDs = Set<String>()
-    @Published var applyToAllBooted: Bool = true
-    
-    // Refresh settings
-    @Published var refreshOnNewDevice: Bool = true
-    @Published var lastRefreshTime: Date?
-    
-    // Controls
-    @Published var setTime = true
-    @Published var time: String = "9:41"
-    
-    @Published var setBatteryState = true
-    @Published var batteryState: String = "discharging"
-    
-    @Published var setBatteryLevel = true
-    @Published var batteryLevel: Double = 100
-    
-    @Published var setWifi = true
-    @Published var wifiMode: String = "active"
-    @Published var wifiBars: Int = 3
-    
-    @Published var setCellular = true
-    @Published var cellularMode: String = "active"
-    @Published var cellularBars: Int = 4
-    
-    @Published var setDataNetwork = true
-    @Published var dataNetwork: String = "wifi"
-    
-    @Published var setOperatorName = false
-    @Published var operatorName: String = "Carrier"
-    
-    @Published var statusMessage: String = ""
-    
-    // Private properties for device monitoring
-    private var deviceMonitorTimer: Timer?
-    private var previousDeviceCount: Int = 0
-    private var previousDeviceUDIDs: Set<String> = []
-    
-    // Computed property for formatted last refresh time
-    var lastRefreshTimeFormatted: String {
-        guard let lastRefreshTime = lastRefreshTime else { return "Never" }
-        let formatter = DateFormatter()
-        formatter.timeStyle = .short
-        return formatter.string(from: lastRefreshTime)
-    }
-    
-    deinit {
-        stopDeviceMonitoring()
-    }
-    
-    func toggleDeviceSelection(_ udid: String) {
-        if selectedUDIDs.contains(udid) {
-            selectedUDIDs.remove(udid)
-        } else {
-            selectedUDIDs.insert(udid)
-        }
-    }
-    
-    func refreshBootedDevices() {
-        let output = Shell.listDevices()
-        print("Raw simctl output:")
-        print(output)
-        print("---")
-        
-        let parsed = DeviceParser.parseBooted(from: output)
-        print("Parsed devices: \(parsed)")
-        
-        DispatchQueue.main.async {
-            self.bootedDevices = parsed
-            self.selectedUDIDs = Set(self.selectedUDIDs.filter { id in parsed.map(\.udid).contains(id) })
-            self.lastRefreshTime = Date()
             
-            // Update device tracking for new device detection
-            self.previousDeviceCount = parsed.count
-            self.previousDeviceUDIDs = Set(parsed.map(\.udid))
+            Spacer()
         }
-    }
-    
-    // MARK: - Device Monitoring Logic
-    
-    func startDeviceMonitoringIfNeeded() {
-        if refreshOnNewDevice {
-            startDeviceMonitoring()
+        .padding(.vertical, 8)
+        .padding(.horizontal, 10)
+        .background(
+            RoundedRectangle(cornerRadius: 8)
+                .fill(isSelected && isSelectable ? Color.accentColor.opacity(0.12) : Color.clear)
+        )
+        .contentShape(RoundedRectangle(cornerRadius: 8))
+        .onTapGesture {
+            if isSelectable { onToggle() }
         }
-    }
-    
-    private func startDeviceMonitoring() {
-        guard refreshOnNewDevice else { return }
-        
-        deviceMonitorTimer = Timer.scheduledTimer(withTimeInterval: 5, repeats: true) { [weak self] _ in
-            self?.checkForNewDevices()
-        }
-    }
-    
-    func stopDeviceMonitoring() {
-        deviceMonitorTimer?.invalidate()
-        deviceMonitorTimer = nil
-    }
-    
-    private func checkForNewDevices() {
-        let output = Shell.listDevices()
-        let parsed = DeviceParser.parseBooted(from: output)
-        let currentUDIDs = Set(parsed.map(\.udid))
-        
-        // Check if there are new devices (devices that weren't in the previous set)
-        let newDevices = currentUDIDs.subtracting(previousDeviceUDIDs)
-        
-        if !newDevices.isEmpty {
-            DispatchQueue.main.async {
-                self.refreshBootedDevices()
-                self.statusMessage = "🔄 Detected \(newDevices.count) new simulator(s)"
-                
-                // Clear the message after 3 seconds
-                DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
-                    if self.statusMessage.contains("new simulator") {
-                        self.statusMessage = ""
-                    }
-                }
-            }
-        }
-    }
-    
-    // MARK: - Existing Methods
-    
-    func buildOptions() -> [String] {
-        var args: [String] = []
-        if setTime, !time.trimmingCharacters(in: .whitespaces).isEmpty {
-            args += ["--time", time]
-        }
-        if setBatteryState { args += ["--batteryState", batteryState] }
-        if setBatteryLevel { args += ["--batteryLevel", "\(Int(batteryLevel))"] }
-        if setWifi {
-            args += ["--wifiMode", wifiMode, "--wifiBars", "\(wifiBars)"]
-        }
-        if setCellular {
-            args += ["--cellularMode", cellularMode, "--cellularBars", "\(cellularBars)"]
-        }
-        if setDataNetwork { args += ["--dataNetwork", dataNetwork] }
-        if setOperatorName, !operatorName.isEmpty { args += ["--operatorName", operatorName] }
-        return args
-    }
-    
-    func applyOverrides() {
-        let options = buildOptions()
-        if options.isEmpty {
-            statusMessage = "Nothing to apply."
-            return
-        }
-        
-        if !applyToAllBooted && selectedUDIDs.isEmpty {
-            statusMessage = "Please select at least one simulator."
-            return
-        }
-        
-        let result: Shell.Result
-        if applyToAllBooted {
-            result = Shell.runSimctlStatusBarAllBootedOverride(options: options)
-        } else {
-            result = Shell.runSimctlStatusBarSelectedOverride(udids: Array(selectedUDIDs), options: options)
-        }
-        
-        // User-friendly status messages
-        if result.exitCode == 0 {
-            let target = applyToAllBooted ? "all booted simulators" : "\(selectedUDIDs.count) selected simulator(s)"
-            statusMessage = "✅ Applied to \(target)"
-        } else {
-            statusMessage = "❌ Failed to apply: \(result.output)"
-        }
-    }
-    
-    func clearOverrides() {
-        if !applyToAllBooted && selectedUDIDs.isEmpty {
-            statusMessage = "Please select at least one simulator."
-            return
-        }
-        
-        let result: Shell.Result
-        if applyToAllBooted {
-            result = Shell.clearStatusBarAllBooted()
-        } else {
-            result = Shell.clearStatusBarSelected(udids: Array(selectedUDIDs))
-        }
-        
-        // User-friendly status messages
-        if result.exitCode == 0 {
-            let target = applyToAllBooted ? "all booted simulators" : "\(selectedUDIDs.count) selected simulator(s)"
-            statusMessage = "✅ Cleared from \(target)"
-        } else {
-            statusMessage = "❌ Failed to clear: \(result.output)"
-        }
+        .opacity(isSelectable ? 1.0 : 0.75)
     }
 }
 
 // MARK: - Shell helpers
-
 enum Shell {
     struct Result {
         let exitCode: Int32
@@ -576,7 +406,6 @@ enum Shell {
 }
 
 // MARK: - Parsing devices
-
 struct Device: Identifiable, Hashable {
     let id = UUID()
     let name: String
@@ -589,15 +418,15 @@ struct Device: Identifiable, Hashable {
         if lowercaseName.contains("iphone") {
             return "iphone"
         } else if lowercaseName.contains("ipad") {
-            return "ipad"
+            return "ipad.landscape"
         } else if lowercaseName.contains("watch") {
             return "applewatch"
         } else if lowercaseName.contains("tv") {
             return "appletv"
         } else if lowercaseName.contains("vision") {
-            return "visionpro"
+            return "vision.pro"
         } else {
-            return "rectangle.on.rectangle" // Generic device icon
+            return "apple.logo"
         }
     }
 }
