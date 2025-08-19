@@ -54,7 +54,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     
     @objc private func openControls() {
         for w in NSApp.windows {
-            if let title = w.title as String?, title.contains("Simulator Status Controls") {
+            if let title = w.title as String?, title.contains("Simulator Status Controls - SimBuddy") {
                 w.makeKeyAndOrderFront(nil)
                 NSApp.activate(ignoringOtherApps: true)
                 return

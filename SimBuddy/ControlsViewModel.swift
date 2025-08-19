@@ -10,6 +10,7 @@ import Combine
 
 final class ControlsViewModel: ObservableObject {
     @Published var bootedDevices: [Device] = []
+    @Published var allDevices: [Device] = []
     @Published var selectedUDIDs = Set<String>()
     @Published var applyToAllBooted: Bool = true
     
@@ -38,8 +39,8 @@ final class ControlsViewModel: ObservableObject {
     @Published var setDataNetwork = true
     @Published var dataNetwork: String = "wifi"
     
-    @Published var setOperatorName = false
-    @Published var operatorName: String = "Carrier"
+    @Published var setOperatorName = true
+    @Published var operatorName: String = "SimBuddy"
     
     @Published var statusMessage: String = ""
     
@@ -47,6 +48,8 @@ final class ControlsViewModel: ObservableObject {
     private var deviceMonitorTimer: Timer?
     private var previousDeviceCount: Int = 0
     private var previousDeviceUDIDs: Set<String> = []
+    // Novo: armazenar o status anterior dos dispositivos para detectar mudanças
+    private var previousDeviceStatuses: [String: String] = [:]
     
     // Computed property for formatted last refresh time
     var lastRefreshTimeFormatted: String {
@@ -87,6 +90,30 @@ final class ControlsViewModel: ObservableObject {
             self.previousDeviceUDIDs = Set(parsed.map(\.udid))
         }
     }
+
+    func refreshAllDevices() {
+        let output = Shell.listDevices()
+        print("Raw simctl output for all devices:")
+        print(output)
+        print("---")
+        
+        let parsed = DeviceParser.parseAll(from: output)
+        print("Parsed all devices: \(parsed)")
+        
+        DispatchQueue.main.async {
+            self.allDevices = parsed
+            // Atualizar o dicionário de status dos dispositivos
+            self.updateDeviceStatuses(parsed)
+        }
+    }
+    
+    // MARK: - Device Status Tracking
+    
+    private func updateDeviceStatuses(_ devices: [Device]) {
+        for device in devices {
+            previousDeviceStatuses[device.udid] = device.status
+        }
+    }
     
     // MARK: - Device Monitoring Logic
     
@@ -100,7 +127,7 @@ final class ControlsViewModel: ObservableObject {
         guard refreshOnNewDevice else { return }
         
         deviceMonitorTimer = Timer.scheduledTimer(withTimeInterval: 5, repeats: true) { [weak self] _ in
-            self?.checkForNewDevices()
+            self?.checkForDeviceChanges()
         }
     }
     
@@ -109,22 +136,63 @@ final class ControlsViewModel: ObservableObject {
         deviceMonitorTimer = nil
     }
     
-    private func checkForNewDevices() {
+    private func checkForDeviceChanges() {
         let output = Shell.listDevices()
-        let parsed = DeviceParser.parseBooted(from: output)
-        let currentUDIDs = Set(parsed.map(\.udid))
+        let parsedBooted = DeviceParser.parseBooted(from: output)
+        let parsedAll = DeviceParser.parseAll(from: output)
         
-        // Check if there are new devices (devices that weren't in the previous set)
-        let newDevices = currentUDIDs.subtracting(previousDeviceUDIDs)
+        let currentUDIDs = Set(parsedBooted.map(\.udid))
         
-        if !newDevices.isEmpty {
+        // Check if there are new booted devices
+        let newBootedDevices = currentUDIDs.subtracting(previousDeviceUDIDs)
+        
+        // Check for status changes in all devices
+        var statusChanges: [String: (old: String?, new: String?)] = [:]
+        for device in parsedAll {
+            let oldStatus = previousDeviceStatuses[device.udid]
+            let newStatus = device.status
+            
+            if oldStatus != newStatus {
+                statusChanges[device.udid] = (old: oldStatus, new: newStatus)
+            }
+        }
+        
+        // Update UI if there are changes
+        if !newBootedDevices.isEmpty || !statusChanges.isEmpty {
             DispatchQueue.main.async {
-                self.refreshBootedDevices()
-                self.statusMessage = "🔄 Detected \(newDevices.count) new simulator(s)"
+                // Update booted devices if there are new ones
+                if !newBootedDevices.isEmpty {
+                    self.refreshBootedDevices()
+                    self.statusMessage = "🔄 Detected \(newBootedDevices.count) new simulator(s)"
+                }
+                
+                // Always update all devices list if there are status changes
+                if !statusChanges.isEmpty {
+                    self.allDevices = parsedAll
+                    self.updateDeviceStatuses(parsedAll)
+                    
+                    // Create a more informative status message for status changes
+                    if newBootedDevices.isEmpty {
+                        let bootedChanges = statusChanges.filter { $0.value.new?.lowercased() == "booted" }
+                        let shutdownChanges = statusChanges.filter { $0.value.new?.lowercased() == "shutdown" }
+                        
+                        var messages: [String] = []
+                        if !bootedChanges.isEmpty {
+                            messages.append("🟢 \(bootedChanges.count) booted")
+                        }
+                        if !shutdownChanges.isEmpty {
+                            messages.append("🔴 \(shutdownChanges.count) shutdown")
+                        }
+                        
+                        if !messages.isEmpty {
+                            self.statusMessage = "📱 Status changes: \(messages.joined(separator: ", "))"
+                        }
+                    }
+                }
                 
                 // Clear the message after 3 seconds
                 DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
-                    if self.statusMessage.contains("new simulator") {
+                    if self.statusMessage.contains("new simulator") || self.statusMessage.contains("Status changes") {
                         self.statusMessage = ""
                     }
                 }

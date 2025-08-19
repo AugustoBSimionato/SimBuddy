@@ -12,10 +12,10 @@ struct SimStatusBarApp: App {
     @NSApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
 
     var body: some Scene {
-        WindowGroup("Simulator Status Controls") {
+        WindowGroup("Simulator Status Controls - SimBuddy") {
             ControlsView()
         }
         .windowStyle(.titleBar)
-        .defaultSize(width: 600, height: 520)
+        .defaultSize(width: 720, height: 920)
     }
 }

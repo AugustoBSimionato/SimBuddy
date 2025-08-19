@@ -14,207 +14,245 @@ struct ControlsView: View {
     var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 18) {
-                SectionCard(systemImage: "iphone.and.arrow.forward", title: "Booted Simulators") {
-                    VStack(alignment: .leading, spacing: 10) {
-                        HStack(spacing: 8) {
-                            Button(action: { vm.refreshBootedDevices() }) {
-                                Label("Refresh", systemImage: "arrow.clockwise")
-                            }
-                            .buttonStyle(.bordered)
-                            .controlSize(.small)
-                            
-                            Spacer()
-                            
-                            Toggle("Apply to all booted", isOn: $vm.applyToAllBooted)
-                                .toggleStyle(SwitchToggleStyle())
-                                .help("When on, applies to 'booted' (all running simulators); otherwise, only to selected UDIDs.")
-                                .controlSize(.small)
-                        }
-                        
-                        HStack {
-                            Toggle("Refresh on new simulator detected", isOn: $vm.refreshOnNewDevice)
-                                .toggleStyle(SwitchToggleStyle())
-                                .help("Automatically refresh when a new simulator is detected")
-                                .controlSize(.small)
-                            
-                            Spacer()
-                            
-                            if vm.lastRefreshTime != nil {
-                                Text("Last updated: \(vm.lastRefreshTimeFormatted)")
-                                    .font(.caption2)
-                                    .foregroundColor(.secondary)
-                            }
-                        }
-                        .font(.caption)
-                        
-                        if vm.bootedDevices.isEmpty {
-                            VStack {
-                                Text("No booted simulators found")
-                                    .foregroundColor(.secondary)
-                                    .padding(.vertical, 40)
-                            }
-                            .frame(maxWidth: .infinity)
-                            .background(Color.clear)
-                        } else {
-                            VStack(spacing: 0) {
-                                if !vm.applyToAllBooted {
-                                    HStack {
-                                        Text("Select simulators to apply overrides to:")
-                                            .font(.caption)
-                                            .foregroundColor(.secondary)
-                                        Spacer()
-                                        Text("\(vm.selectedUDIDs.count) selected")
-                                            .font(.caption)
-                                            .foregroundColor(.secondary)
-                                    }
-                                    .padding(.horizontal, 8)
-                                    .padding(.vertical, 6)
-                                    .background(Color(NSColor.controlBackgroundColor))
+                HStack(spacing: 10) {
+                    SectionCard(systemImage: "macbook.and.iphone", title: "Todos os simuladores") {
+                        VStack(alignment: .leading, spacing: 10) {
+                            HStack(spacing: 8) {
+                                Button(action: { vm.refreshAllDevices() }) {
+                                    Label("Atualizar todos", systemImage: "arrow.clockwise")
                                 }
+                                .buttonStyle(.bordered)
+                                .controlSize(.small)
                                 
-                                ScrollView {
+                                Spacer()
+                                
+                                Text("\(vm.allDevices.count) simuladores")
+                                    .font(.caption)
+                                    .foregroundColor(.secondary)
+                            }
+                            
+                            if vm.allDevices.isEmpty {
+                                VStack {
+                                    Text("Nenhum simulador encontrado")
+                                        .foregroundColor(.secondary)
+                                        .padding(.vertical, 40)
+                                }
+                                .frame(maxWidth: .infinity, maxHeight: 300)
+                                .background(Color.clear)
+                            } else {
+                                ScrollView(.vertical, showsIndicators: true) {
                                     LazyVStack(spacing: 6) {
-                                        ForEach(vm.bootedDevices, id: \.udid) { device in
-                                            DeviceRow(
-                                                device: device,
-                                                isSelected: vm.selectedUDIDs.contains(device.udid),
-                                                isSelectable: !vm.applyToAllBooted,
-                                                onToggle: { vm.toggleDeviceSelection(device.udid) }
-                                            )
-                                            .animation(.default, value: vm.selectedUDIDs)
+                                        ForEach(vm.allDevices, id: \.udid) { device in
+                                            AllDeviceRow(device: device)
                                         }
                                     }
                                     .padding(.vertical, 6)
                                 }
-                                .frame(maxHeight: 220)
+                                .frame(maxHeight: 300)
+                                .background(Color(NSColor.textBackgroundColor))
+                                .cornerRadius(6)
+                                .overlay(
+                                    RoundedRectangle(cornerRadius: 6)
+                                        .stroke(Color(NSColor.separatorColor), lineWidth: 1)
+                                )
                             }
-                            .frame(maxWidth: .infinity)
-                            .background(Color(NSColor.textBackgroundColor))
-                            .cornerRadius(6)
-                            .overlay(
-                                RoundedRectangle(cornerRadius: 6)
-                                    .stroke(Color(NSColor.separatorColor), lineWidth: 1)
-                            )
                         }
+                        .padding(12)
                     }
-                    .padding(12)
+                    
+                    SectionCard(systemImage: "iphone.and.arrow.forward", title: "Simuladores em execução") {
+                        VStack(alignment: .leading, spacing: 10) {
+                            HStack(spacing: 8) {
+                                Button(action: { vm.refreshBootedDevices() }) {
+                                    Label("Atualizar", systemImage: "arrow.clockwise")
+                                }
+                                .buttonStyle(.bordered)
+                                .controlSize(.small)
+                                
+                                Spacer()
+                                
+                                Toggle("Aplicar a todos os simuladores em execução", isOn: $vm.applyToAllBooted)
+                                    .toggleStyle(SwitchToggleStyle())
+                                    .help("Quando ativado, aplica em 'booted' (todos os simuladores em execução); caso contrário, apenas aos UDIDs selecionados.")
+                                    .controlSize(.small)
+                            }
+                            
+                            HStack {
+                                Toggle("Atualizar ao detectar novo simulador", isOn: $vm.refreshOnNewDevice)
+                                    .toggleStyle(SwitchToggleStyle())
+                                    .help("Atualiza automaticamente quando um novo simulador for detectado")
+                                    .controlSize(.small)
+                                
+                                Spacer()
+                                
+                                if vm.lastRefreshTime != nil {
+                                    Text("Última atualização: \(vm.lastRefreshTimeFormatted)")
+                                        .font(.caption2)
+                                        .foregroundColor(.secondary)
+                                }
+                            }
+                            .font(.caption)
+                            
+                            if vm.bootedDevices.isEmpty {
+                                VStack {
+                                    Text("Nenhum simulador em execução encontrado")
+                                        .foregroundColor(.secondary)
+                                        .padding(.vertical, 40)
+                                }
+                                .frame(maxWidth: .infinity, maxHeight: 220)
+                                .background(Color.clear)
+                            } else {
+                                VStack(spacing: 0) {
+                                    if !vm.applyToAllBooted {
+                                        HStack {
+                                            Text("Selecione simuladores para aplicar alterações:")
+                                                .font(.caption)
+                                                .foregroundColor(.secondary)
+                                            Spacer()
+                                            Text("\(vm.selectedUDIDs.count) selecionados")
+                                                .font(.caption)
+                                                .foregroundColor(.secondary)
+                                        }
+                                        .padding(.horizontal, 8)
+                                        .padding(.vertical, 6)
+                                        .background(Color(NSColor.controlBackgroundColor))
+                                    }
+                                    
+                                    ScrollView(.vertical, showsIndicators: true) {
+                                        LazyVStack(spacing: 6) {
+                                            ForEach(vm.bootedDevices, id: \.udid) { device in
+                                                DeviceRow(
+                                                    device: device,
+                                                    isSelected: vm.selectedUDIDs.contains(device.udid),
+                                                    isSelectable: !vm.applyToAllBooted,
+                                                    onToggle: { vm.toggleDeviceSelection(device.udid) }
+                                                )
+                                                .animation(.default, value: vm.selectedUDIDs)
+                                            }
+                                        }
+                                        .padding(.vertical, 6)
+                                    }
+                                    .frame(maxHeight: vm.applyToAllBooted ? 220 : 180)
+                                }
+                                .frame(maxWidth: .infinity)
+                                .background(Color(NSColor.textBackgroundColor))
+                                .cornerRadius(6)
+                                .overlay(
+                                    RoundedRectangle(cornerRadius: 6)
+                                        .stroke(Color(NSColor.separatorColor), lineWidth: 1)
+                                )
+                            }
+                        }
+                        .padding(12)
+                    }
                 }
                 
-                SectionCard(systemImage: "slider.horizontal.3", title: "Overrides") {
+                SectionCard(systemImage: "slider.horizontal.3", title: "Substituições") {
                     VStack(spacing: 12) {
                         VStack(spacing: 8) {
-                            HStack {
-                                Text("Time")
-                                    .frame(width: 80, alignment: .leading)
-                                TextField("e.g. 9:41 or 15:42", text: $vm.time)
-                                    .textFieldStyle(.roundedBorder)
-                                    .frame(width: 160)
-                                    .focusable(false)
-                                Toggle("Set", isOn: $vm.setTime)
-                                    .controlSize(.small)
-                                Spacer()
-                            }
-                            
-                            HStack(spacing: 12) {
-                                Text("Battery")
-                                    .frame(width: 80, alignment: .leading)
-                                VStack(alignment: .leading, spacing: 6) {
+                            VStack(alignment: .leading, spacing: 12) {
+                                Text("Bateria")
+                                    .fontWeight(.semibold)
+                                HStack(spacing: 6) {
                                     HStack {
-                                        Picker("Status", selection: $vm.batteryState) {
-                                            Text("charged").tag("charged")
-                                            Text("charging").tag("charging")
-                                            Text("discharging").tag("discharging")
+                                        Toggle("Status", isOn: $vm.setBatteryState)
+                                            .controlSize(.small)
+                                        Picker("", selection: $vm.batteryState) {
+                                            Text("carregada").tag("charged")
+                                            Text("carregando").tag("charging")
+                                            Text("descarregando").tag("discharging")
                                         }
                                         .frame(width: 170)
-                                        Toggle("Set", isOn: $vm.setBatteryState)
-                                            .controlSize(.small)
                                     }
                                     HStack {
-                                        Text("Level")
+                                        Toggle("Nível", isOn: $vm.setBatteryLevel)
+                                            .controlSize(.small)
                                         Slider(value: $vm.batteryLevel, in: 0...100, step: 5)
                                             .frame(width: 220)
                                         Text("\(Int(vm.batteryLevel))%")
                                             .frame(width: 42, alignment: .trailing)
-                                        Toggle("Set", isOn: $vm.setBatteryLevel)
-                                            .controlSize(.small)
                                     }
+                                    Spacer()
                                 }
+                            }
+                            .padding(.bottom)
+                            
+                            HStack {
+                                Toggle("Hora", isOn: $vm.setTime)
+                                    .controlSize(.small)
+                                TextField("ex.: 9:41 ou 15:42", text: $vm.time)
+                                    .textFieldStyle(.roundedBorder)
+                                    .frame(width: 160)
+                                    .focusable(false)
                                 Spacer()
                             }
                             
                             HStack(spacing: 12) {
-                                Text("Wi‑Fi")
-                                    .frame(width: 80, alignment: .leading)
-                                Picker("Mode", selection: $vm.wifiMode) {
-                                    Text("active").tag("active")
-                                    Text("failed").tag("failed")
-                                    Text("searching").tag("searching")
+                                Toggle("Wi‑Fi", isOn: $vm.setWifi)
+                                    .controlSize(.small)
+                                Picker("Modo", selection: $vm.wifiMode) {
+                                    Text("ativo").tag("active")
+                                    Text("falha").tag("failed")
+                                    Text("procurando").tag("searching")
                                 }
                                 .frame(width: 140)
-                                Picker("Bars", selection: $vm.wifiBars) {
+                                Picker("Barras", selection: $vm.wifiBars) {
                                     ForEach(0..<4) { Text("\($0)").tag($0) }
                                 }
-                                .frame(width: 80)
-                                Toggle("Set", isOn: $vm.setWifi)
-                                    .controlSize(.small)
+                                .frame(width: 90)
                                 Spacer()
                             }
                             
                             HStack(spacing: 12) {
-                                Text("Cellular")
-                                    .frame(width: 80, alignment: .leading)
-                                Picker("Mode", selection: $vm.cellularMode) {
-                                    Text("active").tag("active")
-                                    Text("searching").tag("searching")
-                                    Text("failed").tag("failed")
+                                Toggle("Celular", isOn: $vm.setCellular)
+                                    .controlSize(.small)
+                                Picker("Modo", selection: $vm.cellularMode) {
+                                    Text("ativo").tag("active")
+                                    Text("procurando").tag("searching")
+                                    Text("falha").tag("failed")
                                 }
                                 .frame(width: 140)
-                                Picker("Bars", selection: $vm.cellularBars) {
+                                Picker("Barras", selection: $vm.cellularBars) {
                                     ForEach(0..<5) { Text("\($0)").tag($0) }
                                 }
-                                .frame(width: 80)
-                                Toggle("Set", isOn: $vm.setCellular)
-                                    .controlSize(.small)
+                                .frame(width: 90)
                                 Spacer()
                             }
                             
                             HStack(spacing: 12) {
-                                Text("Data")
-                                    .frame(width: 80, alignment: .leading)
-                                Picker("Type", selection: $vm.dataNetwork) {
+                                Toggle("Dados", isOn: $vm.setDataNetwork)
+                                    .controlSize(.small)
+                                Picker("Tipo", selection: $vm.dataNetwork) {
                                     Text("wifi").tag("wifi")
                                     Text("lte").tag("lte")
                                     Text("4g").tag("4g")
                                     Text("3g").tag("3g")
                                 }
                                 .frame(width: 123)
-                                Toggle("Set", isOn: $vm.setDataNetwork)
-                                    .controlSize(.small)
                                 Spacer()
                             }
                             
                             HStack {
-                                Text("Operator")
-                                    .frame(width: 80, alignment: .leading)
-                                TextField("Carrier name", text: $vm.operatorName)
+                                Toggle("Operadora", isOn: $vm.setOperatorName)
+                                    .controlSize(.small)
+                                TextField("Nome da operadora", text: $vm.operatorName)
                                     .textFieldStyle(.roundedBorder)
                                     .frame(width: 220)
                                     .focusable(false)
-                                Toggle("Set", isOn: $vm.setOperatorName)
-                                    .controlSize(.small)
                                 Spacer()
                             }
                         }
+                        .padding(.bottom)
                         
                         HStack {
                             Button(action: { vm.applyOverrides() }) {
-                                Label("Apply Overrides", systemImage: "wand.and.stars")
+                                Label("Aplicar alterações", systemImage: "wand.and.stars")
                             }
                             .buttonStyle(.borderedProminent)
                             .disabled(!vm.applyToAllBooted && vm.selectedUDIDs.isEmpty)
                             
                             Button(action: { vm.clearOverrides() }) {
-                                Label("Clear Overrides", systemImage: "xmark.circle")
+                                Label("Limpar alterações", systemImage: "xmark.circle")
                             }
                             .buttonStyle(.bordered)
                             .disabled(!vm.applyToAllBooted && vm.selectedUDIDs.isEmpty)
@@ -233,9 +271,11 @@ struct ControlsView: View {
             }
             .padding(16)
             .frame(maxWidth: .infinity)
+            .fontDesign(.rounded)
         }
         .onAppear {
             vm.refreshBootedDevices()
+            vm.refreshAllDevices()
             vm.startDeviceMonitoringIfNeeded()
         }
         .onDisappear {
@@ -275,6 +315,58 @@ private struct SectionCard<Content: View>: View {
                 .stroke(Color(NSColor.separatorColor).opacity(0.6), lineWidth: 0.5)
         )
         .shadow(color: Color.black.opacity(0.03), radius: 6, x: 0, y: 2)
+    }
+}
+
+struct AllDeviceRow: View {
+    let device: Device
+    
+    var body: some View {
+        HStack(spacing: 12) {
+            Image(systemName: device.iconName)
+                .resizable()
+                .scaledToFit()
+                .frame(width: 22, height: 22)
+                .foregroundColor(device.isBooted ? .green : .blue)
+                .padding(6)
+                .background(
+                    RoundedRectangle(cornerRadius: 6)
+                        .fill((device.isBooted ? Color.green : Color.blue).opacity(0.08))
+                )
+            
+            VStack(alignment: .leading, spacing: 2) {
+                Text(device.name)
+                    .font(.subheadline)
+                HStack(spacing: 8) {
+                    Text(device.runtime)
+                        .foregroundColor(.secondary)
+                        .font(.caption2)
+                    Text(device.udid.short)
+                        .foregroundColor(.secondary)
+                        .font(.caption2)
+                    if let status = device.status {
+                        Text(status)
+                            .foregroundColor(device.isBooted ? .green : .orange)
+                            .font(.caption2)
+                            .padding(.horizontal, 6)
+                            .padding(.vertical, 2)
+                            .background(
+                                RoundedRectangle(cornerRadius: 4)
+                                    .fill((device.isBooted ? Color.green : Color.orange).opacity(0.15))
+                            )
+                    }
+                }
+            }
+            
+            Spacer()
+        }
+        .padding(.vertical, 8)
+        .padding(.horizontal, 10)
+        .background(
+            RoundedRectangle(cornerRadius: 8)
+                .fill(device.isBooted ? Color.green.opacity(0.05) : Color.clear)
+        )
+        .opacity(device.isBooted ? 1.0 : 0.75)
     }
 }
 
@@ -411,6 +503,18 @@ struct Device: Identifiable, Hashable {
     let name: String
     let udid: String
     let runtime: String
+    let status: String?
+    
+    init(name: String, udid: String, runtime: String, status: String? = nil) {
+        self.name = name
+        self.udid = udid
+        self.runtime = runtime
+        self.status = status
+    }
+    
+    var isBooted: Bool {
+        return status?.lowercased() == "booted"
+    }
     
     var iconName: String {
         let lowercaseName = name.lowercased()
@@ -457,6 +561,40 @@ enum DeviceParser {
                         let udid = String(trimmedLine[udidRange])
                         
                         devices.append(Device(name: name, udid: udid, runtime: currentRuntime))
+                    }
+                }
+            }
+        }
+        return devices
+    }
+    
+    static func parseAll(from listOutput: String) -> [Device] {
+        var currentRuntime: String = ""
+        var devices: [Device] = []
+        
+        let lines = listOutput.components(separatedBy: .newlines)
+        for line in lines {
+            let trimmedLine = line.trimmingCharacters(in: .whitespaces)
+            
+            // Check for runtime section headers
+            if trimmedLine.hasPrefix("--") && trimmedLine.hasSuffix("--") {
+                currentRuntime = trimmedLine
+                    .replacingOccurrences(of: "--", with: "")
+                    .trimmingCharacters(in: .whitespaces)
+            } else if trimmedLine.contains("(") && trimmedLine.contains(")") {
+                // Parse all devices (Shutdown, Booted, etc.)
+                let pattern = #"^(.+?)\s+\(([A-F0-9-]{36})\)\s+\((.+?)\)"#
+                if let regex = try? NSRegularExpression(pattern: pattern, options: []),
+                   let match = regex.firstMatch(in: trimmedLine, range: NSRange(trimmedLine.startIndex..., in: trimmedLine)) {
+                    
+                    if let nameRange = Range(match.range(at: 1), in: trimmedLine),
+                       let udidRange = Range(match.range(at: 2), in: trimmedLine),
+                       let statusRange = Range(match.range(at: 3), in: trimmedLine) {
+                        let name = String(trimmedLine[nameRange]).trimmingCharacters(in: .whitespaces)
+                        let udid = String(trimmedLine[udidRange])
+                        let status = String(trimmedLine[statusRange])
+                        
+                        devices.append(Device(name: name, udid: udid, runtime: currentRuntime, status: status))
                     }
                 }
             }
