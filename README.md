@@ -22,7 +22,7 @@ SimBuddy is a macOS tool that makes it easy to control and customize the status 
 
 ## Installation
 
-You can download the latest version [here](www.test.com). This will download a file named `SimBuddy.dmg`. Open it and move the app to your Applications folder.
+You can download the latest version [here](https://github.com/AugustoBSimionato/SimBuddy/releases). This will download a file named `SimBuddy.dmg`. Open it and move the app to your Applications folder.
 
 ## License
 
