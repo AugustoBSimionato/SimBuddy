@@ -4,7 +4,7 @@
 
 SimBuddy is a macOS tool that makes it easy to control and customize the status bar of Xcode simulators directly from your system menu bar. It's ideal for developers and designers who need to simulate different device states for screenshots, testing, or demos.
 
-> Compatible with macOS Ventura 13.5
+> Compatible with macOS Ventura 13.5 and later.
 
 <img width="1051" height="709" alt="SimBuddy Screenshot" src="https://github.com/user-attachments/assets/16434a33-f3b1-462b-a983-586a9e7185b3" />
 
