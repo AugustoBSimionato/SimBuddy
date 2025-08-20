@@ -2,7 +2,7 @@
 
 # SimBuddy
 
-SimBuddy is a macOS tool that makes it easy to control and customize the status bar of iOS simulators directly from your system menu bar. It's ideal for developers and designers who need to simulate different device states for screenshots, testing, or demos.
+SimBuddy is a macOS tool that makes it easy to control and customize the status bar of Xcode simulators directly from your system menu bar. It's ideal for developers and designers who need to simulate different device states for screenshots, testing, or demos.
 
 <img width="1051" height="709" alt="SimBuddy Screenshot" src="https://github.com/user-attachments/assets/16434a33-f3b1-462b-a983-586a9e7185b3" />
 
@@ -23,13 +23,6 @@ SimBuddy is a macOS tool that makes it easy to control and customize the status 
 ## Installation
 
 You can download the latest version [here](www.test.com). This will download a file named `SimBuddy.dmg`. Open it and move the app to your Applications folder.
-
-## How to use
-
-1. Open SimBuddy.
-2. The 📱 icon will appear in your menu bar.
-3. Click the icon for quick actions or open the control window for advanced customization.
-4. Select the desired simulators and apply status bar changes as needed.
 
 ## License
 
