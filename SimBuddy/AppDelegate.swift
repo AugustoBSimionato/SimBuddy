@@ -16,7 +16,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         NSApp.setActivationPolicy(.regular)
         
         statusItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.variableLength)
-        statusItem.button?.title = "📱"
+        statusItem.button?.title = "SimBuddy"
         statusItem.button?.action = #selector(toggleMenu(_:))
         statusItem.button?.target = self
     }
