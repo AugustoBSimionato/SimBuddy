@@ -2,7 +2,14 @@
   "sourceLanguage" : "pt-BR",
   "strings" : {
     "" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : ""
+          }
+        }
+      }
     },
     "%lld" : {
       "localizations" : {
@@ -15,10 +22,6 @@
       }
     },
     "%lld selecionados" : {
-
-    },
-    "%lld selected" : {
-      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -29,7 +32,14 @@
       }
     },
     "%lld simuladores" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld simulators"
+          }
+        }
+      }
     },
     "%lld%%" : {
       "localizations" : {
@@ -61,8 +71,27 @@
         }
       }
     },
-    "active" : {
-      "extractionState" : "stale",
+    "Aplicar a todos os simuladores em execução" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Apply to all running simulators"
+          }
+        }
+      }
+    },
+    "Aplicar alterações" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Apply changes"
+          }
+        }
+      }
+    },
+    "ativo" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -72,65 +101,47 @@
         }
       }
     },
-    "Aplicar a todos os simuladores em execução" : {
-
-    },
-    "Aplicar alterações" : {
-
-    },
-    "Apply Overrides" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Apply Overrides"
-          }
-        }
-      }
-    },
-    "Apply to all booted" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Apply to all booted"
-          }
-        }
-      }
-    },
-    "ativo" : {
-
-    },
     "Atualiza automaticamente quando um novo simulador for detectado" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Automatically updates when a new simulator is detected"
+          }
+        }
+      }
     },
     "Atualizar" : {
-
-    },
-    "Atualizar ao detectar novo simulador" : {
-
-    },
-    "Atualizar todos" : {
-
-    },
-    "Automatically refresh when a new simulator is detected" : {
-      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Automatically refresh when a new simulator is detected"
+            "value" : "Refresh"
+          }
+        }
+      }
+    },
+    "Atualizar ao detectar novo simulador" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Update when detecting new simulator"
+          }
+        }
+      }
+    },
+    "Atualizar todos" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Update all"
           }
         }
       }
     },
     "Barras" : {
-
-    },
-    "Bars" : {
-      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -141,10 +152,6 @@
       }
     },
     "Bateria" : {
-
-    },
-    "Battery" : {
-      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -155,38 +162,6 @@
       }
     },
     "carregada" : {
-
-    },
-    "carregando" : {
-
-    },
-    "Carrier name" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Carrier name"
-          }
-        }
-      }
-    },
-    "Cellular" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Cellular"
-          }
-        }
-      }
-    },
-    "Celular" : {
-
-    },
-    "charged" : {
-      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -196,8 +171,7 @@
         }
       }
     },
-    "charging" : {
-      "extractionState" : "stale",
+    "carregando" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -207,22 +181,17 @@
         }
       }
     },
-    "Clear Overrides" : {
-      "extractionState" : "stale",
+    "Celular" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Clear Overrides"
+            "value" : "Cellular"
           }
         }
       }
     },
     "Dados" : {
-
-    },
-    "Data" : {
-      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -233,10 +202,6 @@
       }
     },
     "descarregando" : {
-
-    },
-    "discharging" : {
-      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -246,61 +211,45 @@
         }
       }
     },
-    "e.g. 9:41 or 15:42" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "e.g. 9:41 or 15:42"
-          }
-        }
-      }
-    },
     "ex.: 9:41 ou 15:42" : {
-
-    },
-    "failed" : {
-      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "failed"
+            "value" : "e.g.: 9:41 or 15:42"
           }
         }
       }
     },
     "falha" : {
-
-    },
-    "Hora" : {
-
-    },
-    "Last updated: %@" : {
-      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Last updated: %@"
+            "value" : "failure"
           }
         }
       }
     },
-    "Level" : {
-      "extractionState" : "stale",
+    "Hora" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Level"
+            "value" : "Tiime"
           }
         }
       }
     },
     "Limpar alterações" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Clear changes"
+          }
+        }
+      }
     },
     "lte" : {
       "localizations" : {
@@ -312,8 +261,7 @@
         }
       }
     },
-    "Mode" : {
-      "extractionState" : "stale",
+    "Modo" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -323,76 +271,57 @@
         }
       }
     },
-    "Modo" : {
-
-    },
     "Nenhum simulador em execução encontrado" : {
-
-    },
-    "Nenhum simulador encontrado" : {
-
-    },
-    "Nível" : {
-
-    },
-    "No booted simulators found" : {
-      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "No booted simulators found"
+            "value" : "No running simulator found"
+          }
+        }
+      }
+    },
+    "Nenhum simulador encontrado" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No simulator found"
+          }
+        }
+      }
+    },
+    "Nível" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Level"
           }
         }
       }
     },
     "Nome da operadora" : {
-
-    },
-    "Operadora" : {
-
-    },
-    "Operator" : {
-      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Operator"
+            "value" : "Carrier name"
+          }
+        }
+      }
+    },
+    "Operadora" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Carrier"
           }
         }
       }
     },
     "procurando" : {
-
-    },
-    "Quando ativado, aplica em 'booted' (todos os simuladores em execução); caso contrário, apenas aos UDIDs selecionados." : {
-
-    },
-    "Refresh" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Refresh"
-          }
-        }
-      }
-    },
-    "Refresh on new simulator detected" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Refresh on new simulator detected"
-          }
-        }
-      }
-    },
-    "searching" : {
-      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -402,44 +331,35 @@
         }
       }
     },
+    "Quando ativado, aplica em 'booted' (todos os simuladores em execução); caso contrário, apenas aos UDIDs selecionados." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "When on, applies to 'booted' (all running simulators); otherwise, only to selected UDIDs."
+          }
+        }
+      }
+    },
     "Selecione simuladores para aplicar alterações:" : {
-
-    },
-    "Select simulators to apply overrides to:" : {
-      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Select simulators to apply overrides to:"
-          }
-        }
-      }
-    },
-    "Set" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Set"
-          }
-        }
-      }
-    },
-    "Simulator Status Controls" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Simulator Status Controls"
+            "value" : "Select simulators to apply changes:"
           }
         }
       }
     },
     "Simulator Status Controls - SimBuddy" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Simulator Status Controls - SimBuddy"
+          }
+        }
+      }
     },
     "Status" : {
       "localizations" : {
@@ -451,22 +371,7 @@
         }
       }
     },
-    "Time" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Time"
-          }
-        }
-      }
-    },
     "Tipo" : {
-
-    },
-    "Type" : {
-      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -477,15 +382,11 @@
       }
     },
     "Última atualização: %@" : {
-
-    },
-    "When on, applies to 'booted' (all running simulators); otherwise, only to selected UDIDs." : {
-      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "When on, applies to 'booted' (all running simulators); otherwise, only to selected UDIDs."
+            "value" : "Last update: %@"
           }
         }
       }
