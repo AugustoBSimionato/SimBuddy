@@ -14,11 +14,9 @@ final class ControlsViewModel: ObservableObject {
     @Published var selectedUDIDs = Set<String>()
     @Published var applyToAllBooted: Bool = true
     
-    // Refresh settings
     @Published var refreshOnNewDevice: Bool = true
     @Published var lastRefreshTime: Date?
     
-    // Controls
     @Published var setTime = true
     @Published var time: String = "9:41"
     
@@ -44,14 +42,11 @@ final class ControlsViewModel: ObservableObject {
     
     @Published var statusMessage: String = ""
     
-    // Private properties for device monitoring
     private var deviceMonitorTimer: Timer?
     private var previousDeviceCount: Int = 0
     private var previousDeviceUDIDs: Set<String> = []
-    // Novo: armazenar o status anterior dos dispositivos para detectar mudanças
     private var previousDeviceStatuses: [String: String] = [:]
     
-    // Computed property for formatted last refresh time
     var lastRefreshTimeFormatted: String {
         guard let lastRefreshTime = lastRefreshTime else { return "Never" }
         let formatter = DateFormatter()
@@ -85,7 +80,6 @@ final class ControlsViewModel: ObservableObject {
             self.selectedUDIDs = Set(self.selectedUDIDs.filter { id in parsed.map(\.udid).contains(id) })
             self.lastRefreshTime = Date()
             
-            // Update device tracking for new device detection
             self.previousDeviceCount = parsed.count
             self.previousDeviceUDIDs = Set(parsed.map(\.udid))
         }
@@ -102,7 +96,6 @@ final class ControlsViewModel: ObservableObject {
         
         DispatchQueue.main.async {
             self.allDevices = parsed
-            // Atualizar o dicionário de status dos dispositivos
             self.updateDeviceStatuses(parsed)
         }
     }
@@ -157,21 +150,17 @@ final class ControlsViewModel: ObservableObject {
             }
         }
         
-        // Update UI if there are changes
         if !newBootedDevices.isEmpty || !statusChanges.isEmpty {
             DispatchQueue.main.async {
-                // Update booted devices if there are new ones
                 if !newBootedDevices.isEmpty {
                     self.refreshBootedDevices()
                     self.statusMessage = "🔄 Detected \(newBootedDevices.count) new simulator(s)"
                 }
                 
-                // Always update all devices list if there are status changes
                 if !statusChanges.isEmpty {
                     self.allDevices = parsedAll
                     self.updateDeviceStatuses(parsedAll)
                     
-                    // Create a more informative status message for status changes
                     if newBootedDevices.isEmpty {
                         let bootedChanges = statusChanges.filter { $0.value.new?.lowercased() == "booted" }
                         let shutdownChanges = statusChanges.filter { $0.value.new?.lowercased() == "shutdown" }
@@ -239,7 +228,6 @@ final class ControlsViewModel: ObservableObject {
             result = Shell.runSimctlStatusBarSelectedOverride(udids: Array(selectedUDIDs), options: options)
         }
         
-        // User-friendly status messages
         if result.exitCode == 0 {
             let target = applyToAllBooted ? "all booted simulators" : "\(selectedUDIDs.count) selected simulator(s)"
             statusMessage = "✅ Applied to \(target)"
@@ -261,7 +249,6 @@ final class ControlsViewModel: ObservableObject {
             result = Shell.clearStatusBarSelected(udids: Array(selectedUDIDs))
         }
         
-        // User-friendly status messages
         if result.exitCode == 0 {
             let target = applyToAllBooted ? "all booted simulators" : "\(selectedUDIDs.count) selected simulator(s)"
             statusMessage = "✅ Cleared from \(target)"
