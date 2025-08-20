@@ -39,4 +39,4 @@ This project is licensed under the [MIT License](LICENSE).
 
 Contributions are welcome! Feel free to open issues or pull!
 
-Created by [@gutobaroni](https://www.threads.com/@gutobaroni)
+Created by [@gutobaroni](https://www.threads.com/@gutobaroni) in Brazil 🇧🇷
