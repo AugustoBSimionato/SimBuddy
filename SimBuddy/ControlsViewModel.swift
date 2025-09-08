@@ -84,7 +84,7 @@ final class ControlsViewModel: ObservableObject {
             self.previousDeviceUDIDs = Set(parsed.map(\.udid))
         }
     }
-
+    
     func refreshAllDevices() {
         let output = Shell.listDevices()
         print("Raw simctl output for all devices:")
@@ -97,6 +97,53 @@ final class ControlsViewModel: ObservableObject {
         DispatchQueue.main.async {
             self.allDevices = parsed
             self.updateDeviceStatuses(parsed)
+        }
+    }
+    
+    func bootDevice(_ udid: String) {
+        statusMessage = "🔄 Starting simulator..."
+        
+        let result = Shell.bootDevice(udid: udid)
+        
+        if result.exitCode == 0 {
+            statusMessage = "✅ Simulator started successfully"
+            // Refresh devices after a short delay to see the status change
+            DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+                self.refreshAllDevices()
+                self.refreshBootedDevices()
+            }
+        } else {
+            // More specific error messages
+            if result.output.contains("Unable to boot device in current state") {
+                statusMessage = "ℹ️ Simulator already running"
+            } else if result.output.contains("No such file or directory") {
+                statusMessage = "❌ Simulator not found"
+            } else {
+                statusMessage = "❌ Failed to start: \(result.output)"
+            }
+        }
+        
+        // Clear status message after a few seconds
+        DispatchQueue.main.asyncAfter(deadline: .now() + 4) {
+            if self.statusMessage.contains("Simulator started") ||
+                self.statusMessage.contains("already running") {
+                self.statusMessage = ""
+            }
+        }
+    }
+    
+    func shutdownDevice(_ udid: String) {
+        let result = Shell.shutdownDevice(udid: udid)
+        
+        if result.exitCode == 0 {
+            statusMessage = "✅ Simulator shutdown successfully"
+            // Refresh devices after shutdown
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                self.refreshAllDevices()
+                self.refreshBootedDevices()
+            }
+        } else {
+            statusMessage = "❌ Failed to shutdown: \(result.output)"
         }
     }
     

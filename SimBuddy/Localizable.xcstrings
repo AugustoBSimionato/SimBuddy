@@ -211,6 +211,9 @@
         }
       }
     },
+    "Encerrar simulador" : {
+
+    },
     "ex.: 9:41 ou 15:42" : {
       "localizations" : {
         "en" : {
@@ -240,6 +243,9 @@
           }
         }
       }
+    },
+    "Iniciar simulador" : {
+
     },
     "Limpar alterações" : {
       "localizations" : {

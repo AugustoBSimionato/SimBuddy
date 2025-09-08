@@ -43,7 +43,15 @@ struct ControlsView: View {
                                 ScrollView(.vertical, showsIndicators: true) {
                                     LazyVStack(spacing: 6) {
                                         ForEach(vm.allDevices, id: \.udid) { device in
-                                            AllDeviceRow(device: device)
+                                            AllDeviceRow(
+                                                device: device,
+                                                onBoot: { udid in
+                                                    vm.bootDevice(udid)
+                                                },
+                                                onShutdown: { udid in
+                                                    vm.shutdownDevice(udid)
+                                                }
+                                            )
                                         }
                                     }
                                     .padding(.vertical, 6)
@@ -320,6 +328,8 @@ private struct SectionCard<Content: View>: View {
 
 struct AllDeviceRow: View {
     let device: Device
+    let onBoot: ((String) -> Void)?
+    let onShutdown: ((String) -> Void)?
     
     var body: some View {
         HStack(spacing: 12) {
@@ -359,6 +369,28 @@ struct AllDeviceRow: View {
             }
             
             Spacer()
+            
+            if device.isBooted {
+                Button(action: {
+                    onShutdown?(device.udid)
+                }) {
+                    Image(systemName: "stop.circle")
+                        .foregroundColor(.red)
+                        .imageScale(.large)
+                }
+                .buttonStyle(PlainButtonStyle())
+                .help("Encerrar simulador")
+            } else {
+                Button(action: {
+                    onBoot?(device.udid)
+                }) {
+                    Image(systemName: "play.circle")
+                        .foregroundColor(.blue)
+                        .imageScale(.large)
+                }
+                .buttonStyle(PlainButtonStyle())
+                .help("Iniciar simulador")
+            }
         }
         .padding(.vertical, 8)
         .padding(.horizontal, 10)
@@ -460,6 +492,61 @@ enum Shell {
     
     static func listDevices() -> String {
         run("/usr/bin/xcrun", ["simctl", "list", "devices"]).output
+    }
+    
+    static func bootDevice(udid: String) -> Result {
+        // 1) Ensure Simulator.app is running (launch if needed)
+        let isSimulatorRunning: Bool = {
+            for app in NSWorkspace.shared.runningApplications {
+                if app.bundleIdentifier == "com.apple.iphonesimulator" { return true }
+            }
+            return false
+        }()
+        
+        if !isSimulatorRunning {
+            let openResult = run("/usr/bin/open", ["-a", "Simulator"])
+            if openResult.exitCode != 0 {
+                return Result(
+                    exitCode: openResult.exitCode,
+                    output: "Failed to open Simulator app: \(openResult.output)"
+                )
+            }
+        }
+        
+        // 2) Try to boot the specific device
+        let bootResult = run("/usr/bin/xcrun", ["simctl", "boot", udid])
+        
+        // Treat "already booted" as success; switch focus to it
+        if bootResult.exitCode != 0 &&
+            (bootResult.output.contains("Unable to boot device in current state: Booted")
+             || bootResult.output.localizedCaseInsensitiveContains("already booted")) {
+            _ = run("/usr/bin/xcrun", ["simctl", "open", udid])
+            return Result(exitCode: 0, output: "Device already booted, switching to simulator...")
+        }
+        
+        if bootResult.exitCode != 0 {
+            return Result(
+                exitCode: bootResult.exitCode,
+                output: "Failed to boot device: \(bootResult.output)"
+            )
+        }
+        
+        // 3) Wait until the device reports as fully booted using simctl bootstatus
+        // This is better than arbitrary sleeps.
+        let waitResult = run("/usr/bin/xcrun", ["simctl", "bootstatus", udid, "-b", "-u", "-d", "30"])
+        if waitResult.exitCode != 0 {
+            // Fall back to a short wait if bootstatus fails (older Xcodes)
+            Thread.sleep(forTimeInterval: 1.0)
+        }
+        
+        // 4) Open/switch to the device window
+        _ = run("/usr/bin/xcrun", ["simctl", "open", udid])
+        
+        return Result(exitCode: 0, output: "Device booted and opened successfully")
+    }
+    
+    static func shutdownDevice(udid: String) -> Result {
+        run("/usr/bin/xcrun", ["simctl", "shutdown", udid])
     }
     
     static func runSimctlStatusBarAllBootedOverride(options: [String]) -> Result {
