@@ -4,18 +4,20 @@
 
 SimBuddy is a macOS tool that makes it easy to control and customize the status bar of Xcode simulators directly from your system menu bar. It's ideal for developers and designers who need to simulate different device states for screenshots, testing, or demos.
 
-> Compatible with macOS Ventura 13.5 and later.
+> Compatible with macOS Tahoe 26 and later.
 
 <img width="1051" height="709" alt="SimBuddy Screenshot" src="https://github.com/user-attachments/assets/16434a33-f3b1-462b-a983-586a9e7185b3" />
 
 ## Features
 
+- **Native macOS design:** A sidebar with your simulators grouped by runtime and a settings-style form under a Liquid Glass toolbar, following Apple's Human Interface Guidelines.
 - **Menu bar control:** Quickly access main functions from the macOS menu bar icon.
 - **Preset application:** Instantly set the simulator status bar to the classic "9:41, 100%, full bars" with a single click.
-- **Multiple simulator management:** View all installed and running simulators, and apply changes to all or only selected ones.
-- **Detailed customization:** Change time, battery state and level, Wi-Fi, cellular data, carrier, and other status bar items.
-- **Automatic updates:** Option to refresh the simulator list automatically when new devices are detected.
-- **Status messages:** Visual feedback for actions performed and changes detected in simulators.
+- **Multiple simulator management:** View all installed and running simulators, boot or shut them down, and apply changes to every running simulator or only the ones you select.
+- **Detailed customization:** Change time, battery state and level, Wi-Fi, cellular data, carrier, and other status bar items, with a live preview of the status bar.
+- **Keyboard shortcuts:** ⌘R refreshes the list, ⌘↩ applies your changes and ⌘K clears them.
+- **Automatic updates:** The simulator list stays in sync as simulators boot or shut down (you can turn this off in Settings).
+- **Clear feedback:** Confirmations appear in the window subtitle, and an alert explains what went wrong when `simctl` fails.
 
 ## Available Languages
 
