@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import UniformTypeIdentifiers
 
 struct ContentView: View {
     @Environment(SimulatorStore.self) private var store
@@ -14,6 +15,8 @@ struct ContentView: View {
     @FocusState private var isSidebarFocused: Bool
 
     var body: some View {
+        @Bindable var store = store
+
         NavigationSplitView {
             SimulatorSidebar(searchText: searchText, showsRunningOnly: $showsRunningOnly)
                 .focused($isSidebarFocused)
@@ -48,6 +51,10 @@ struct ContentView: View {
             Button("OK") {}
         } message: { failure in
             Text(failure.message)
+        }
+        .fileImporter(isPresented: $store.isImportingFiles, allowedContentTypes: [.item], allowsMultipleSelection: true) { result in
+            guard case .success(let urls) = result, let simulator = store.selectedSimulator else { return }
+            Task { await store.share(urls, with: simulator) }
         }
     }
 

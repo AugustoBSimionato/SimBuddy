@@ -29,11 +29,14 @@ final class SimulatorStore {
     private(set) var busySimulators: Set<Simulator.ID> = []
     private(set) var isUpdatingStatusBar = false
     private(set) var confirmation: String?
+    private(set) var simulatorsReceivingFiles: Set<Simulator.ID> = []
+    private(set) var sharedFilesRevision = 0
 
     var selection: Set<Simulator.ID> = []
     var target: Target = .allBooted
     var overrides = StatusBarOverrides()
     var failure: Failure?
+    var isImportingFiles = false
 
     @ObservationIgnored private var refreshGeneration = 0
     @ObservationIgnored private var confirmationTask: Task<Void, Never>?
@@ -64,6 +67,15 @@ final class SimulatorStore {
 
     func canShutdown(_ ids: Set<Simulator.ID>) -> Bool {
         simulators(withIDs: ids).contains { $0.isBooted && !busySimulators.contains($0.id) }
+    }
+
+    var selectedSimulator: Simulator? {
+        selection.count == 1 ? simulators(withIDs: selection).first : nil
+    }
+
+    func canShare(with simulator: Simulator?) -> Bool {
+        guard let simulator else { return false }
+        return simulator.isBooted && simulator.supportsFileSharing && !simulatorsReceivingFiles.contains(simulator.id)
     }
 
     // MARK: - Refreshing
@@ -136,6 +148,49 @@ final class SimulatorStore {
         await refresh()
         if let (simulator, result) = failures.first {
             failure = Failure(title: failureTitle(simulator.name), message: result.output)
+        }
+    }
+
+    // MARK: - Sharing
+
+    func share(_ urls: [URL], with simulator: Simulator) async {
+        guard !urls.isEmpty, canShare(with: simulator), let dataURL = simulator.dataURL else { return }
+        simulatorsReceivingFiles.insert(simulator.id)
+        defer {
+            simulatorsReceivingFiles.remove(simulator.id)
+            sharedFilesRevision += 1
+        }
+
+        var failures: [(name: String, message: String)] = []
+        for url in urls {
+            if SimulatorFiles.isPhotoLibraryMedia(url), await Shell.addMedia(url, to: simulator.udid).succeeded {
+                continue
+            }
+            do {
+                try await SimulatorFiles.copy(url, toFilesIn: dataURL)
+            } catch {
+                failures.append((url.lastPathComponent, error.localizedDescription))
+            }
+        }
+
+        if let (name, message) = failures.first {
+            failure = Failure(
+                title: String(localized: "Não foi possível enviar “\(name)” para “\(simulator.name)”"),
+                message: message
+            )
+        } else if urls.count == 1 {
+            confirm(String(localized: "“\(urls[0].lastPathComponent)” enviado para “\(simulator.name)”"))
+        } else {
+            confirm(String(localized: "\(urls.count) itens enviados para “\(simulator.name)”"))
+        }
+    }
+
+    func deleteSharedItems(_ items: [SharedItem]) async {
+        defer { sharedFilesRevision += 1 }
+        do {
+            try await SimulatorFiles.remove(items)
+        } catch {
+            failure = Failure(title: String(localized: "Não foi possível excluir os itens"), message: error.localizedDescription)
         }
     }
 

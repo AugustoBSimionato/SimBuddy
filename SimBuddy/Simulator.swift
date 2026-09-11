@@ -30,10 +30,12 @@ nonisolated struct Simulator: Identifiable, Hashable, Sendable {
     let name: String
     let runtime: Runtime
     let deviceType: String
+    let dataURL: URL?
     var state: State
 
     var id: String { udid }
     var isBooted: Bool { state == .booted }
+    var supportsFileSharing: Bool { runtime.platform == "iOS" || runtime.platform == "visionOS" }
 
     var symbolName: String {
         switch family {
@@ -101,6 +103,7 @@ nonisolated enum SimulatorList {
         let state: String
         let isAvailable: Bool?
         let deviceTypeIdentifier: String?
+        let dataPath: String?
     }
 
     static func decode(_ data: Data) throws -> [Simulator] {
@@ -116,6 +119,7 @@ nonisolated enum SimulatorList {
                             name: $0.name,
                             runtime: runtime,
                             deviceType: $0.deviceTypeIdentifier ?? "",
+                            dataURL: $0.dataPath.map { URL(filePath: $0, directoryHint: .isDirectory) },
                             state: .init($0.state)
                         )
                     }

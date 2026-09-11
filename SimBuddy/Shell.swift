@@ -87,6 +87,10 @@ nonisolated extension Shell {
         await simctl(["shutdown", udid])
     }
 
+    static func addMedia(_ url: URL, to udid: String) async -> Result {
+        await simctl(["addmedia", udid, url.path(percentEncoded: false)])
+    }
+
     enum StatusBarTarget: Sendable {
         case allBooted
         case simulators([String])

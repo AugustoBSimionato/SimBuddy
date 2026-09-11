@@ -31,6 +31,14 @@ struct SimulatorCommands: Commands {
 
             Divider()
 
+            Button("Enviar arquivos…", systemImage: "square.and.arrow.up") {
+                store.isImportingFiles = true
+            }
+            .keyboardShortcut("o")
+            .disabled(!store.canShare(with: store.selectedSimulator))
+
+            Divider()
+
             Button("Aplicar alterações", systemImage: "checkmark") {
                 Task { await store.applyOverrides() }
             }

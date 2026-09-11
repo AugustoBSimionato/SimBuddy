@@ -110,6 +110,8 @@ struct OverridesForm: View {
                         .frame(maxWidth: 200)
                 }
             }
+
+            SharingSection()
         }
         .formStyle(.grouped)
         .toolbar { toolbarContent }
