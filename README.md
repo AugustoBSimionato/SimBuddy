@@ -15,7 +15,8 @@ SimBuddy is a macOS tool that makes it easy to control and customize the status 
 - **Preset application:** Instantly set the simulator status bar to the classic "9:41, 100%, full bars" with a single click.
 - **Multiple simulator management:** View all installed and running simulators, boot or shut them down, and apply changes to every running simulator or only the ones you select.
 - **Detailed customization:** Change time, battery state and level, Wi-Fi, cellular data, carrier, and other status bar items, with a live preview of the status bar.
-- **Keyboard shortcuts:** ⌘R refreshes the list, ⌘↩ applies your changes and ⌘K clears them.
+- **File sharing:** Drop photos, videos, and documents onto the Sharing tray of the selected simulator. Images and videos go to the Photos app and everything else to the Files app, and files you shared to the Files app can be removed right from the tray.
+- **Keyboard shortcuts:** ⌘R refreshes the list, ⌘O sends files to the selected simulator, ⌘↩ applies your changes and ⌘K clears them.
 - **Automatic updates:** The simulator list stays in sync as simulators boot or shut down (you can turn this off in Settings).
 - **Clear feedback:** Confirmations appear in the window subtitle, and an alert explains what went wrong when `simctl` fails.
 
