@@ -8,14 +8,29 @@
 import SwiftUI
 
 @main
-struct SimStatusBarApp: App {
-    @NSApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
+struct SimBuddyApp: App {
+    static let mainWindowID = "main"
+
+    @NSApplicationDelegateAdaptor(AppDelegate.self) private var appDelegate
+    @State private var store = SimulatorStore()
 
     var body: some Scene {
-        WindowGroup("Simulator Status Controls - SimBuddy") {
-            ControlsView()
+        Window("SimBuddy", id: Self.mainWindowID) {
+            ContentView()
+                .environment(store)
         }
-        .windowStyle(.titleBar)
-        .defaultSize(width: 720, height: 920)
+        .defaultSize(width: 980, height: 700)
+        .commands {
+            SimulatorCommands(store: store)
+        }
+
+        Settings {
+            SettingsView()
+        }
+
+        MenuBarExtra("SimBuddy", systemImage: "platter.filled.top.iphone") {
+            MenuBarContent()
+                .environment(store)
+        }
     }
 }
