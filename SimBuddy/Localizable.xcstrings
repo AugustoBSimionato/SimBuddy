@@ -856,6 +856,246 @@
           }
         }
       }
+    },
+    "%lld itens enviados para “%@”" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "%lld items sent to “%@”"
+          }
+        }
+      }
+    },
+    "Arraste arquivos para cá" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Drag files here"
+          }
+        }
+      }
+    },
+    "Compartilhamento" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Sharing"
+          }
+        }
+      }
+    },
+    "Enviando…" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Sending…"
+          }
+        }
+      }
+    },
+    "Enviar arquivos…" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Send Files…"
+          }
+        }
+      }
+    },
+    "Escolher arquivos para enviar ao simulador" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Choose files to send to the simulator"
+          }
+        }
+      }
+    },
+    "Esta ação não pode ser desfeita." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "You can’t undo this action."
+          }
+        }
+      }
+    },
+    "Excluir" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Delete"
+          }
+        }
+      }
+    },
+    "Excluir %lld itens do simulador?" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Delete %lld items from the simulator?"
+          }
+        }
+      }
+    },
+    "Excluir do simulador" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Delete from Simulator"
+          }
+        }
+      }
+    },
+    "Excluir do simulador os itens selecionados" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Delete the selected items from the simulator"
+          }
+        }
+      }
+    },
+    "Excluir “%@” do simulador?" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Delete “%@” from the simulator?"
+          }
+        }
+      }
+    },
+    "Inicie o simulador para enviar arquivos." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Boot the simulator to send files."
+          }
+        }
+      }
+    },
+    "Mostrar no Finder" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Show in Finder"
+          }
+        }
+      }
+    },
+    "No app Arquivos" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "In the Files app"
+          }
+        }
+      }
+    },
+    "No app Fotos" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "In the Photos app"
+          }
+        }
+      }
+    },
+    "Não foi possível enviar “%@” para “%@”" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Unable to Send “%1$@” to “%2$@”"
+          }
+        }
+      }
+    },
+    "Não foi possível excluir os itens" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Unable to Delete the Items"
+          }
+        }
+      }
+    },
+    "O app Arquivos ainda não está disponível neste simulador." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "The Files app isn’t available on this simulator yet."
+          }
+        }
+      }
+    },
+    "O compartilhamento de arquivos não está disponível para simuladores de %@." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "File sharing isn’t available for %@ simulators."
+          }
+        }
+      }
+    },
+    "Selecione um simulador na barra lateral para enviar arquivos para ele." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Select a simulator in the sidebar to send files to it."
+          }
+        }
+      }
+    },
+    "Solte arquivos na bandeja para enviá-los ao simulador: imagens e vídeos vão para o app Fotos; o resto, para o app Arquivos. Itens do Fotos só podem ser excluídos no próprio simulador." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Drop files on the tray to send them to the simulator: images and videos go to the Photos app, everything else to the Files app. Items in Photos can only be deleted in the simulator itself."
+          }
+        }
+      }
+    },
+    "Visualização Rápida" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Quick Look"
+          }
+        }
+      }
+    },
+    "“%@” enviado para “%@”" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "“%1$@” sent to “%2$@”"
+          }
+        }
+      }
     }
   },
   "version" : "1.1"
