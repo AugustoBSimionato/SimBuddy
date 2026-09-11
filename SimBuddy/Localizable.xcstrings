@@ -1,82 +1,178 @@
 {
   "sourceLanguage" : "pt-BR",
   "strings" : {
-    "" : {
+    "%lld barras" : {
       "localizations" : {
         "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : ""
+          "variations" : {
+            "plural" : {
+              "one" : {
+                "stringUnit" : {
+                  "state" : "machine_translated",
+                  "value" : "%lld bar"
+                }
+              },
+              "other" : {
+                "stringUnit" : {
+                  "state" : "machine_translated",
+                  "value" : "%lld bars"
+                }
+              }
+            }
+          }
+        },
+        "pt-BR" : {
+          "variations" : {
+            "plural" : {
+              "one" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%lld barra"
+                }
+              },
+              "other" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%lld barras"
+                }
+              },
+              "zero" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%lld barras"
+                }
+              }
+            }
           }
         }
       }
     },
-    "%lld" : {
+    "%lld em execução" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
-            "state" : "translated",
-            "value" : "%lld"
+            "state" : "machine_translated",
+            "value" : "%lld running"
           }
         }
       }
     },
-    "%lld selecionados" : {
+    "Abrir o SimBuddy" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
-            "state" : "translated",
-            "value" : "%lld selected"
+            "state" : "machine_translated",
+            "value" : "Open SimBuddy"
           }
         }
       }
     },
-    "%lld simuladores" : {
+    "Ajustes…" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
-            "state" : "translated",
-            "value" : "%lld simulators"
+            "state" : "machine_translated",
+            "value" : "Settings…"
           }
         }
       }
     },
-    "%lld%%" : {
+    "Alterações aplicadas a %lld simuladores" : {
       "localizations" : {
         "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "%lld%%"
+          "variations" : {
+            "plural" : {
+              "one" : {
+                "stringUnit" : {
+                  "state" : "machine_translated",
+                  "value" : "Changes applied to %lld simulator"
+                }
+              },
+              "other" : {
+                "stringUnit" : {
+                  "state" : "machine_translated",
+                  "value" : "Changes applied to %lld simulators"
+                }
+              }
+            }
+          }
+        },
+        "pt-BR" : {
+          "variations" : {
+            "plural" : {
+              "one" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "Alterações aplicadas a %lld simulador"
+                }
+              },
+              "other" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "Alterações aplicadas a %lld simuladores"
+                }
+              }
+            }
           }
         }
       }
     },
-    "3g" : {
+    "Alterações removidas de %lld simuladores" : {
       "localizations" : {
         "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "3g"
+          "variations" : {
+            "plural" : {
+              "one" : {
+                "stringUnit" : {
+                  "state" : "machine_translated",
+                  "value" : "Changes cleared from %lld simulator"
+                }
+              },
+              "other" : {
+                "stringUnit" : {
+                  "state" : "machine_translated",
+                  "value" : "Changes cleared from %lld simulators"
+                }
+              }
+            }
+          }
+        },
+        "pt-BR" : {
+          "variations" : {
+            "plural" : {
+              "one" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "Alterações removidas de %lld simulador"
+                }
+              },
+              "other" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "Alterações removidas de %lld simuladores"
+                }
+              }
+            }
           }
         }
       }
     },
-    "4g" : {
+    "Aplicar" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
-            "state" : "translated",
-            "value" : "4g"
+            "state" : "machine_translated",
+            "value" : "Apply"
           }
         }
       }
     },
-    "Aplicar a todos os simuladores em execução" : {
+    "Aplicar a" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
-            "state" : "translated",
-            "value" : "Apply to all running simulators"
+            "state" : "machine_translated",
+            "value" : "Apply to"
           }
         }
       }
@@ -85,28 +181,118 @@
       "localizations" : {
         "en" : {
           "stringUnit" : {
-            "state" : "translated",
-            "value" : "Apply changes"
+            "state" : "machine_translated",
+            "value" : "Apply Changes"
           }
         }
       }
     },
-    "ativo" : {
+    "Aplicar as alterações à barra de status" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
-            "state" : "translated",
-            "value" : "active"
+            "state" : "machine_translated",
+            "value" : "Apply the changes to the status bar"
           }
         }
       }
     },
-    "Atualiza automaticamente quando um novo simulador for detectado" : {
+    "Aplicar predefinição (9:41, bateria cheia, sinal máximo)" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
-            "state" : "translated",
-            "value" : "Automatically updates when a new simulator is detected"
+            "state" : "machine_translated",
+            "value" : "Apply Preset (9:41, Full Battery, Full Signal)"
+          }
+        }
+      }
+    },
+    "As alterações serão aplicadas a %lld simuladores em execução." : {
+      "localizations" : {
+        "en" : {
+          "variations" : {
+            "plural" : {
+              "one" : {
+                "stringUnit" : {
+                  "state" : "machine_translated",
+                  "value" : "Changes will be applied to %lld running simulator."
+                }
+              },
+              "other" : {
+                "stringUnit" : {
+                  "state" : "machine_translated",
+                  "value" : "Changes will be applied to %lld running simulators."
+                }
+              }
+            }
+          }
+        },
+        "pt-BR" : {
+          "variations" : {
+            "plural" : {
+              "one" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "As alterações serão aplicadas a %lld simulador em execução."
+                }
+              },
+              "other" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "As alterações serão aplicadas a %lld simuladores em execução."
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "As alterações serão aplicadas a %lld simuladores selecionados." : {
+      "localizations" : {
+        "en" : {
+          "variations" : {
+            "plural" : {
+              "one" : {
+                "stringUnit" : {
+                  "state" : "machine_translated",
+                  "value" : "Changes will be applied to %lld selected simulator."
+                }
+              },
+              "other" : {
+                "stringUnit" : {
+                  "state" : "machine_translated",
+                  "value" : "Changes will be applied to %lld selected simulators."
+                }
+              }
+            }
+          }
+        },
+        "pt-BR" : {
+          "variations" : {
+            "plural" : {
+              "one" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "As alterações serão aplicadas a %lld simulador selecionado."
+                }
+              },
+              "other" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "As alterações serão aplicadas a %lld simuladores selecionados."
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "Ativo" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Active"
           }
         }
       }
@@ -121,62 +307,62 @@
         }
       }
     },
-    "Atualizar ao detectar novo simulador" : {
+    "Atualizar a lista de simuladores" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
-            "state" : "translated",
-            "value" : "Update when detecting new simulator"
+            "state" : "machine_translated",
+            "value" : "Refresh the simulator list"
           }
         }
       }
     },
-    "Atualizar todos" : {
+    "Atualizar a lista de simuladores automaticamente" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
-            "state" : "translated",
-            "value" : "Refresh all"
+            "state" : "machine_translated",
+            "value" : "Refresh the simulator list automatically"
           }
         }
       }
     },
-    "Barras" : {
+    "Atualizar lista" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
-            "state" : "translated",
-            "value" : "Bars"
+            "state" : "machine_translated",
+            "value" : "Refresh List"
           }
         }
       }
     },
-    "Bateria" : {
+    "Buscar" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
-            "state" : "translated",
-            "value" : "Battery"
+            "state" : "machine_translated",
+            "value" : "Search"
           }
         }
       }
     },
-    "carregada" : {
+    "Carregada" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
-            "state" : "translated",
-            "value" : "charged"
+            "state" : "machine_translated",
+            "value" : "Charged"
           }
         }
       }
     },
-    "carregando" : {
+    "Carregando" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
-            "state" : "translated",
-            "value" : "charging"
+            "state" : "machine_translated",
+            "value" : "Charging"
           }
         }
       }
@@ -191,45 +377,112 @@
         }
       }
     },
-    "Dados" : {
+    "Conectividade" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
-            "state" : "translated",
-            "value" : "Data"
+            "state" : "machine_translated",
+            "value" : "Connectivity"
           }
         }
       }
     },
-    "descarregando" : {
+    "Copiar UDID" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
-            "state" : "translated",
-            "value" : "discharging"
+            "state" : "machine_translated",
+            "value" : "Copy UDID"
           }
         }
       }
     },
-    "Encerrar simulador" : {
-
-    },
-    "ex.: 9:41 ou 15:42" : {
+    "Crie simuladores no Xcode para vê-los aqui." : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
-            "state" : "translated",
-            "value" : "e.g.: 9:41 or 15:42"
+            "state" : "machine_translated",
+            "value" : "Create simulators in Xcode to see them here."
           }
         }
       }
     },
-    "falha" : {
+    "Descarregando" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
-            "state" : "translated",
-            "value" : "failure"
+            "state" : "machine_translated",
+            "value" : "Discharging"
+          }
+        }
+      }
+    },
+    "Destino" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Target"
+          }
+        }
+      }
+    },
+    "Em execução" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Running"
+          }
+        }
+      }
+    },
+    "Encerrar" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Shut Down"
+          }
+        }
+      }
+    },
+    "Encerrar o SimBuddy" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Quit SimBuddy"
+          }
+        }
+      }
+    },
+    "Encerrar os simuladores selecionados" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Shut down the selected simulators"
+          }
+        }
+      }
+    },
+    "Estado da bateria" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Battery state"
+          }
+        }
+      }
+    },
+    "Falha" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Failed"
           }
         }
       }
@@ -244,65 +497,182 @@
         }
       }
     },
-    "Iniciar simulador" : {
-
+    "Hora e bateria" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Time & Battery"
+          }
+        }
+      }
+    },
+    "Iniciar" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Boot"
+          }
+        }
+      }
+    },
+    "Iniciar os simuladores selecionados" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Boot the selected simulators"
+          }
+        }
+      }
+    },
+    "Inicie um simulador para alterar a barra de status dele." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Boot a simulator to change its status bar."
+          }
+        }
+      }
     },
     "Limpar alterações" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
-            "state" : "translated",
-            "value" : "Clear changes"
+            "state" : "machine_translated",
+            "value" : "Clear Changes"
           }
         }
       }
     },
-    "lte" : {
+    "Modo do celular" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
-            "state" : "translated",
-            "value" : "lte"
+            "state" : "machine_translated",
+            "value" : "Cellular mode"
           }
         }
       }
     },
-    "Modo" : {
+    "Modo do Wi‑Fi" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
-            "state" : "translated",
-            "value" : "Mode"
+            "state" : "machine_translated",
+            "value" : "Wi‑Fi mode"
           }
         }
       }
     },
-    "Nenhum simulador em execução encontrado" : {
+    "Mostrar só em execução" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
-            "state" : "translated",
-            "value" : "No running simulator found"
+            "state" : "machine_translated",
+            "value" : "Show Running Only"
           }
         }
       }
     },
-    "Nenhum simulador encontrado" : {
+    "Mostrar só os simuladores em execução" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
-            "state" : "translated",
-            "value" : "No simulator found"
+            "state" : "machine_translated",
+            "value" : "Show only running simulators"
           }
         }
       }
     },
-    "Nível" : {
+    "Mostrar todos" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
-            "state" : "translated",
-            "value" : "Level"
+            "state" : "machine_translated",
+            "value" : "Show All"
+          }
+        }
+      }
+    },
+    "Não foi possível aplicar as alterações" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Unable to Apply Changes"
+          }
+        }
+      }
+    },
+    "Não foi possível encerrar “%@”" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Unable to Shut Down “%@”"
+          }
+        }
+      }
+    },
+    "Não foi possível iniciar “%@”" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Unable to Boot “%@”"
+          }
+        }
+      }
+    },
+    "Não foi possível limpar as alterações" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Unable to Clear Changes"
+          }
+        }
+      }
+    },
+    "Nenhum simulador" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "No Simulators"
+          }
+        }
+      }
+    },
+    "Nenhum simulador em execução" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "No Running Simulators"
+          }
+        }
+      }
+    },
+    "Nenhum simulador em execução no momento." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "No simulators are running right now."
+          }
+        }
+      }
+    },
+    "Nível da bateria" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Battery level"
           }
         }
       }
@@ -317,6 +687,36 @@
         }
       }
     },
+    "O SimBuddy verifica a cada poucos segundos se algum simulador foi iniciado ou encerrado." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "SimBuddy checks every few seconds whether a simulator has booted or shut down."
+          }
+        }
+      }
+    },
+    "Ocultar" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Hide"
+          }
+        }
+      }
+    },
+    "OK" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "OK"
+          }
+        }
+      }
+    },
     "Operadora" : {
       "localizations" : {
         "en" : {
@@ -327,72 +727,122 @@
         }
       }
     },
-    "procurando" : {
+    "Pré-visualização da barra de status" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
-            "state" : "translated",
-            "value" : "searching"
+            "state" : "machine_translated",
+            "value" : "Status bar preview"
           }
         }
       }
     },
-    "Quando ativado, aplica em 'booted' (todos os simuladores em execução); caso contrário, apenas aos UDIDs selecionados." : {
+    "Procurando" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
-            "state" : "translated",
-            "value" : "When on, applies to 'booted' (all running simulators); otherwise, only to selected UDIDs."
+            "state" : "machine_translated",
+            "value" : "Searching"
           }
         }
       }
     },
-    "Selecione simuladores para aplicar alterações:" : {
+    "Rede de dados" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
-            "state" : "translated",
-            "value" : "Select simulators to apply changes:"
+            "state" : "machine_translated",
+            "value" : "Data network"
           }
         }
       }
     },
-    "Simulator Status Controls - SimBuddy" : {
+    "Remover as alterações da barra de status" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
-            "state" : "translated",
-            "value" : "Simulator Status Controls - SimBuddy"
+            "state" : "machine_translated",
+            "value" : "Remove the changes from the status bar"
           }
         }
       }
     },
-    "Status" : {
+    "Selecione na barra lateral os simuladores em execução que devem receber as alterações." : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
-            "state" : "translated",
-            "value" : "Status"
+            "state" : "machine_translated",
+            "value" : "In the sidebar, select the running simulators that should receive the changes."
           }
         }
       }
     },
-    "Tipo" : {
+    "Sem suporte" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
-            "state" : "translated",
-            "value" : "Type"
+            "state" : "machine_translated",
+            "value" : "Not Supported"
           }
         }
       }
     },
-    "Última atualização: %@" : {
+    "SimBuddy" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
-            "state" : "translated",
-            "value" : "Last update: %@"
+            "state" : "machine_translated",
+            "value" : "SimBuddy"
+          }
+        }
+      }
+    },
+    "Simulador" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Simulator"
+          }
+        }
+      }
+    },
+    "Simuladores selecionados na barra lateral" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Simulators selected in the sidebar"
+          }
+        }
+      }
+    },
+    "Sinal do celular" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Cellular signal"
+          }
+        }
+      }
+    },
+    "Sinal do Wi‑Fi" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Wi‑Fi signal"
+          }
+        }
+      }
+    },
+    "Todos os simuladores em execução" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "All running simulators"
           }
         }
       }
@@ -403,16 +853,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Wi‑Fi"
-          }
-        }
-      }
-    },
-    "wifi" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "wifi"
           }
         }
       }
