@@ -33,7 +33,11 @@ struct ContentView: View {
                     }
                 }
         } detail: {
-            OverridesForm()
+            if store.selection.isEmpty {
+                Color.clear
+            } else {
+                OverridesForm()
+            }
         }
         .onAppear { isSidebarFocused = true }
         .searchable(text: $searchText, placement: .sidebar, prompt: Text("Buscar"))

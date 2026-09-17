@@ -37,6 +37,23 @@ nonisolated struct Simulator: Identifiable, Hashable, Sendable {
     var isBooted: Bool { state == .booted }
     var supportsFileSharing: Bool { runtime.platform == "iOS" || runtime.platform == "visionOS" }
 
+    var deviceTypeName: String {
+        deviceType
+            .split(separator: ".")
+            .last
+            .map { String($0).replacing("-", with: " ") } ?? name
+    }
+
+    var stateName: String {
+        switch state {
+        case .booted: "Em execução"
+        case .booting: "Iniciando"
+        case .shutdown: "Desligado"
+        case .shuttingDown: "Encerrando"
+        case .other(let value): value
+        }
+    }
+
     var symbolName: String {
         switch family {
         case .iPhone: "iphone"
@@ -63,6 +80,18 @@ nonisolated struct Simulator: Identifiable, Hashable, Sendable {
         if identifier.localizedCaseInsensitiveContains("Vision") { return .vision }
         return .other
     }
+}
+
+nonisolated struct SimulatorMetrics: Hashable, Sendable {
+    struct App: Hashable, Identifiable, Sendable {
+        let bundleIdentifier: String
+        let name: String
+
+        var id: String { bundleIdentifier }
+    }
+
+    let diskUsage: Int64?
+    let apps: [App]
 }
 
 nonisolated struct Runtime: Hashable, Comparable, Sendable {

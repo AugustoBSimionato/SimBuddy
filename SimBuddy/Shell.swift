@@ -87,6 +87,40 @@ nonisolated extension Shell {
         await simctl(["shutdown", udid])
     }
 
+    static func delete(udid: String) async -> Result {
+        await simctl(["delete", udid])
+    }
+
+    static func diskUsage(at url: URL) async -> Int64? {
+        let result = await run("/usr/bin/du", ["-sk", url.path(percentEncoded: false)])
+        guard result.succeeded,
+              let kilobytes = result.output.split(whereSeparator: { $0 == "\t" || $0 == " " }).first.flatMap({ Int64($0) })
+        else { return nil }
+        return kilobytes * 1_024
+    }
+
+    static func installedApps(udid: String, dataURL: URL?) async -> [SimulatorMetrics.App] {
+        let result = await simctl(["listapps", udid])
+        let simctlApps: [SimulatorMetrics.App]
+        if result.succeeded,
+           let object = try? PropertyListSerialization.propertyList(from: result.standardOutput, format: nil) as? [String: Any] {
+            simctlApps = object.compactMap { bundleIdentifier, value in
+                guard let app = value as? [String: Any] else { return nil }
+                let name = (app["CFBundleDisplayName"] as? String)
+                    ?? (app["CFBundleName"] as? String)
+                    ?? bundleIdentifier
+                let identifier = (app["CFBundleIdentifier"] as? String) ?? bundleIdentifier
+                return SimulatorMetrics.App(bundleIdentifier: identifier, name: name)
+            }
+        } else {
+            simctlApps = []
+        }
+        let bundleApps = dataURL.map(SimulatorFiles.installedApps(in:)) ?? []
+        return Dictionary(simctlApps.map { ($0.bundleIdentifier, $0) } + bundleApps.map { ($0.bundleIdentifier, $0) }, uniquingKeysWith: { _, bundleApp in bundleApp })
+            .values
+            .sorted { $0.name.localizedStandardCompare($1.name) == .orderedAscending }
+    }
+
     static func addMedia(_ url: URL, to udid: String) async -> Result {
         await simctl(["addmedia", udid, url.path(percentEncoded: false)])
     }

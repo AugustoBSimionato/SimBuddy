@@ -31,6 +31,8 @@ final class SimulatorStore {
     private(set) var confirmation: String?
     private(set) var simulatorsReceivingFiles: Set<Simulator.ID> = []
     private(set) var sharedFilesRevision = 0
+    private(set) var metrics: [Simulator.ID: SimulatorMetrics] = [:]
+    private(set) var metricsLoading: Set<Simulator.ID> = []
 
     var selection: Set<Simulator.ID> = []
     var target: Target = .allBooted
@@ -90,8 +92,11 @@ final class SimulatorStore {
         guard result.succeeded, let simulators = try? SimulatorList.decode(result.standardOutput) else { return }
 
         if simulators != self.simulators { self.simulators = simulators }
+        let simulatorIDs = Set(simulators.map(\.id))
+        metrics = metrics.filter { simulatorIDs.contains($0.key) }
         let validSelection = selection.intersection(simulators.map(\.id))
         if validSelection != selection { selection = validSelection }
+        await loadMetrics(for: selection)
     }
 
     func monitor() async {
@@ -117,6 +122,53 @@ final class SimulatorStore {
         let targets = simulators(withIDs: ids).filter { $0.isBooted && !busySimulators.contains($0.id) }
         await perform(Shell.shutdown(udid:), on: targets, transitionalState: .shuttingDown) {
             String(localized: "Não foi possível encerrar “\($0)”")
+        }
+    }
+
+    func loadMetrics(for ids: Set<Simulator.ID>) async {
+        guard ids.count == 1, let simulator = simulators(withIDs: ids).first,
+              !metricsLoading.contains(simulator.id)
+        else { return }
+
+        metricsLoading.insert(simulator.id)
+        defer { metricsLoading.remove(simulator.id) }
+
+        let diskUsageTask = Task<Int64?, Never> { [dataURL = simulator.dataURL] in
+            guard let dataURL else { return nil }
+            return await Shell.diskUsage(at: dataURL)
+        }
+        async let apps = Shell.installedApps(udid: simulator.udid, dataURL: simulator.dataURL)
+        metrics[simulator.id] = await SimulatorMetrics(diskUsage: diskUsageTask.value, apps: apps)
+    }
+
+    func delete(_ ids: Set<Simulator.ID>) async {
+        let targets = simulators(withIDs: ids).filter { !busySimulators.contains($0.id) }
+        guard !targets.isEmpty else { return }
+
+        let targetIDs = Set(targets.map(\.id))
+        busySimulators.formUnion(targetIDs)
+        let failures = await withTaskGroup(of: (Simulator, Shell.Result).self) { group in
+            for simulator in targets {
+                group.addTask {
+                    if simulator.isBooted {
+                        let shutdown = await Shell.shutdown(udid: simulator.udid)
+                        guard shutdown.succeeded else { return (simulator, shutdown) }
+                    }
+                    return (simulator, await Shell.delete(udid: simulator.udid))
+                }
+            }
+
+            var failures: [(Simulator, Shell.Result)] = []
+            for await (simulator, result) in group {
+                busySimulators.remove(simulator.id)
+                if !result.succeeded { failures.append((simulator, result)) }
+            }
+            return failures
+        }
+
+        await refresh()
+        if let (simulator, result) = failures.first {
+            failure = Failure(title: String(localized: "Não foi possível excluir “\(simulator.name)”"), message: result.output)
         }
     }
 

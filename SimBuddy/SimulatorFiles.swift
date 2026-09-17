@@ -58,6 +58,25 @@ nonisolated enum SimulatorFiles {
         }
     }
 
+    static func installedApps(in dataURL: URL) -> [SimulatorMetrics.App] {
+        let applications = dataURL.appending(path: "Containers/Bundle/Application", directoryHint: .isDirectory)
+        return contents(of: applications)
+            .flatMap(contents)
+            .filter { $0.pathExtension == "app" }
+            .compactMap { appURL in
+                let infoURL = appURL.appending(path: "Info.plist")
+                guard let data = try? Data(contentsOf: infoURL),
+                      let info = try? PropertyListSerialization.propertyList(from: data, format: nil) as? [String: Any],
+                      let bundleIdentifier = info["CFBundleIdentifier"] as? String
+                else { return nil }
+                let name = (info["CFBundleDisplayName"] as? String)
+                    ?? (info["CFBundleName"] as? String)
+                    ?? appURL.deletingPathExtension().lastPathComponent
+                return SimulatorMetrics.App(bundleIdentifier: bundleIdentifier, name: name)
+            }
+            .sorted { $0.name.localizedStandardCompare($1.name) == .orderedAscending }
+    }
+
     @concurrent
     static func copy(_ url: URL, toFilesIn dataURL: URL) async throws {
         guard let directory = filesDirectory(in: dataURL) else { throw FilesAppUnavailable() }

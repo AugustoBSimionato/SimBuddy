@@ -11,27 +11,66 @@ struct SimulatorSidebar: View {
     @Environment(SimulatorStore.self) private var store
     let searchText: String
     @Binding var showsRunningOnly: Bool
+    @State private var pendingDeletion: [Simulator]?
 
     var body: some View {
         @Bindable var store = store
         let sections = visibleSections
+        let sidebarSelection = Binding<Set<SidebarItem>>(
+            get: {
+                store.selection.isEmpty
+                    ? [.home]
+                    : Set(store.selection.map(SidebarItem.simulator))
+            },
+            set: { items in
+                store.selection = Set(items.compactMap(\.simulatorID))
+            }
+        )
 
-        List(selection: $store.selection) {
+        List(selection: sidebarSelection) {
+            Section {
+                Label("Início", systemImage: "house")
+                    .tag(SidebarItem.home)
+            }
             ForEach(sections, id: \.key) { section in
                 Section(section.key.name) {
                     ForEach(section.value) { simulator in
                         SimulatorRow(simulator: simulator, isBusy: store.busySimulators.contains(simulator.id))
+                            .tag(SidebarItem.simulator(simulator.id))
                     }
                 }
             }
         }
-        .contextMenu(forSelectionType: Simulator.ID.self) { ids in
-            SimulatorContextMenu(ids: ids)
-        } primaryAction: { ids in
+        .contextMenu(forSelectionType: SidebarItem.self) { items in
+            let ids = Set(items.compactMap(\.simulatorID))
+            SimulatorContextMenu(ids: ids) { simulators in
+                pendingDeletion = simulators
+            }
+        } primaryAction: { items in
+            let ids = Set(items.compactMap(\.simulatorID))
             Task { await store.boot(ids) }
         }
         .overlay {
             emptyState(hasVisibleSimulators: !sections.isEmpty)
+        }
+        .task(id: store.selection) {
+            await store.loadMetrics(for: store.selection)
+        }
+        .confirmationDialog(
+            deletionTitle,
+            isPresented: Binding(
+                get: { pendingDeletion != nil },
+                set: { if !$0 { pendingDeletion = nil } }
+            ),
+            presenting: pendingDeletion
+        ) { simulators in
+            Button("Excluir", role: .destructive) {
+                Task { await store.delete(Set(simulators.map(\.id))) }
+            }
+        } message: { simulators in
+            Text(simulators.count == 1
+                ? "O simulador e todos os seus dados serão removidos permanentemente."
+                : "Os simuladores e todos os seus dados serão removidos permanentemente.")
         }
     }
 
@@ -43,6 +82,11 @@ struct SimulatorSidebar: View {
                     || simulator.runtime.name.localizedStandardContains(searchText))
         }
         return Dictionary(grouping: visible, by: \.runtime).sorted { $0.key < $1.key }
+    }
+
+    private var deletionTitle: String {
+        let count = pendingDeletion?.count ?? 0
+        return count == 1 ? "Excluir simulador?" : "Excluir \(count) simuladores?"
     }
 
     @ViewBuilder
@@ -66,6 +110,16 @@ struct SimulatorSidebar: View {
                 Button("Mostrar todos") { showsRunningOnly = false }
             }
         }
+    }
+}
+
+private enum SidebarItem: Hashable {
+    case home
+    case simulator(Simulator.ID)
+
+    var simulatorID: Simulator.ID? {
+        guard case .simulator(let id) = self else { return nil }
+        return id
     }
 }
 
@@ -105,10 +159,17 @@ private struct SimulatorRow: View {
 private struct SimulatorContextMenu: View {
     @Environment(SimulatorStore.self) private var store
     let ids: Set<Simulator.ID>
+    let requestDeletion: ([Simulator]) -> Void
 
     var body: some View {
         let canBoot = store.canBoot(ids)
         let canShutdown = store.canShutdown(ids)
+        let simulators = store.simulators(withIDs: ids)
+
+        if let simulator = simulators.only {
+            simulatorDetails(simulator)
+            Divider()
+        }
 
         if canBoot {
             Button("Iniciar", systemImage: "play") {
@@ -125,10 +186,62 @@ private struct SimulatorContextMenu: View {
                 Divider()
             }
             Button("Copiar UDID", systemImage: "doc.on.doc") {
-                let udids = store.simulators(withIDs: ids).map(\.udid)
+                let udids = simulators.map(\.udid)
                 NSPasteboard.general.clearContents()
                 NSPasteboard.general.setString(udids.joined(separator: "\n"), forType: .string)
             }
+            if let simulator = simulators.only, let dataURL = simulator.dataURL {
+                Button("Copiar caminho do simulador", systemImage: "document.on.document") {
+                    NSPasteboard.general.clearContents()
+                    NSPasteboard.general.setString(dataURL.path(percentEncoded: false), forType: .string)
+                }
+                Button("Mostrar no Finder", systemImage: "folder") {
+                    NSWorkspace.shared.activateFileViewerSelecting([dataURL])
+                }
+            }
+            Divider()
+            Button("Excluir simulador", systemImage: "trash", role: .destructive) {
+                requestDeletion(simulators)
+            }
         }
     }
+
+    @ViewBuilder
+    private func simulatorDetails(_ simulator: Simulator) -> some View {
+        let metrics = store.metrics[simulator.id]
+        let isLoading = store.metricsLoading.contains(simulator.id)
+
+        Button("\(simulator.deviceTypeName) · \(simulator.runtime.name)") {}
+            .disabled(true)
+        Button("Status: \(simulator.stateName)") {}
+            .disabled(true)
+        if let diskUsage = metrics?.diskUsage {
+            Button("Em disco: \(ByteCountFormatter.string(fromByteCount: diskUsage, countStyle: .file))") {}
+                .disabled(true)
+        } else if isLoading {
+            Button("Carregando detalhes…") {}
+                .disabled(true)
+        }
+        Menu(metrics.map { "Apps instalados (\($0.apps.count))" } ?? "Apps instalados") {
+            if isLoading {
+                Button("Carregando apps…") {}
+                    .disabled(true)
+            } else if let metrics, metrics.apps.isEmpty {
+                Button("Nenhum app encontrado") {}
+                    .disabled(true)
+            } else if let metrics {
+                ForEach(metrics.apps) { app in
+                    Button("\(app.name) — \(app.bundleIdentifier)") {}
+                        .disabled(true)
+                }
+            } else {
+                Button("Selecione o simulador para carregar os apps") {}
+                    .disabled(true)
+            }
+        }
+    }
+}
+
+private extension Collection {
+    var only: Element? { count == 1 ? first : nil }
 }
