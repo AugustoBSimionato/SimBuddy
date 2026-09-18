@@ -1,12 +1,12 @@
-<img width="128" height="128" alt="SimBuddy Icon" src="https://github.com/user-attachments/assets/aeff3c7b-e888-4028-817f-d61ef5d4e5da" />
+<img width="1024" height="1024" alt="Image" src="https://github.com/user-attachments/assets/37184303-f58b-480e-8ae5-76a953ed3843" />
 
 # SimBuddy
 
-SimBuddy is a macOS tool that makes it easy to control and customize the status bar of Xcode simulators directly from your system menu bar. It's ideal for developers and designers who need to simulate different device states for screenshots, testing, or demos.
+SimBuddy is a macOS tool that makes it easy to control and customize the status bar of Xcode simulators. It's ideal for developers and designers who need to simulate different status bar device states for screenshots, or demos.
 
 > Compatible with macOS Tahoe 26 and later.
 
-<img width="1051" height="709" alt="SimBuddy Screenshot" src="https://github.com/user-attachments/assets/16434a33-f3b1-462b-a983-586a9e7185b3" />
+<img width="1092" height="812" alt="SimBuddy" src="https://github.com/user-attachments/assets/c50d4f28-ac44-4f53-8d54-45a8bf213438" />
 
 ## Features
 
