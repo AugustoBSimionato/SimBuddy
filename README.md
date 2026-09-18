@@ -1,4 +1,4 @@
-<img width="256" height="256" alt="SimBuddy icon" src="https://github.com/user-attachments/assets/37184303-f58b-480e-8ae5-76a953ed3843" />
+<img width="128" height="128" alt="SimBuddy icon" src="https://github.com/user-attachments/assets/37184303-f58b-480e-8ae5-76a953ed3843" />
 
 # SimBuddy
 
