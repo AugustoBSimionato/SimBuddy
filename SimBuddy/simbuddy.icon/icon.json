@@ -14,7 +14,7 @@
               "value" : "normal"
             }
           ],
-          "glass" : true,
+          "glass" : false,
           "hidden" : false,
           "image-name" : "Frame 3.svg",
           "name" : "finder-face",

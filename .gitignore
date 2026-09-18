@@ -12,9 +12,5 @@ build/
 *.dSYM.zip
 *.dSYM
 
-# Swift Package Manager
-.swiftpm/
-.build/
-
 # macOS
 .DS_Store
