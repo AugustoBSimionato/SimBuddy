@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct SettingsView: View {
-    @AppStorage(SimulatorStore.refreshesAutomaticallyKey) private var refreshesAutomatically = true
+    @AppStorage(SimulatorViewModel.refreshesAutomaticallyKey) private var refreshesAutomatically = true
 
     var body: some View {
         Form {

@@ -12,16 +12,16 @@ struct SimBuddyApp: App {
     static let mainWindowID = "main"
 
     @NSApplicationDelegateAdaptor(AppDelegate.self) private var appDelegate
-    @State private var store = SimulatorStore()
+    @State private var viewModel = SimulatorViewModel()
 
     var body: some Scene {
         Window("SimBuddy", id: Self.mainWindowID) {
             ContentView()
-                .environment(store)
+                .environment(viewModel)
         }
         .defaultSize(width: 980, height: 700)
         .commands {
-            SimulatorCommands(store: store)
+            SimulatorCommands(viewModel: viewModel)
         }
 
         Settings {
@@ -30,7 +30,7 @@ struct SimBuddyApp: App {
 
         MenuBarExtra("SimBuddy", systemImage: "platter.filled.top.iphone") {
             MenuBarContent()
-                .environment(store)
+                .environment(viewModel)
         }
     }
 }

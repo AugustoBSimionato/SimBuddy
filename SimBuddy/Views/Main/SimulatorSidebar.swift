@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct SimulatorSidebar: View {
-    @Environment(SimulatorStore.self) private var store
+    @Environment(SimulatorViewModel.self) private var store
     let searchText: String
     @Binding var showsRunningOnly: Bool
     @State private var pendingDeletion: [Simulator]?
@@ -157,7 +157,7 @@ private struct SimulatorRow: View {
 }
 
 private struct SimulatorContextMenu: View {
-    @Environment(SimulatorStore.self) private var store
+    @Environment(SimulatorViewModel.self) private var store
     let ids: Set<Simulator.ID>
     let requestDeletion: ([Simulator]) -> Void
 

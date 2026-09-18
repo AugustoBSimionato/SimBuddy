@@ -9,7 +9,7 @@ import SwiftUI
 import UniformTypeIdentifiers
 
 struct ContentView: View {
-    @Environment(SimulatorStore.self) private var store
+    @Environment(SimulatorViewModel.self) private var store
     @State private var searchText = ""
     @SceneStorage("showsRunningOnly") private var showsRunningOnly = false
     @FocusState private var isSidebarFocused: Bool
@@ -33,11 +33,7 @@ struct ContentView: View {
                     }
                 }
         } detail: {
-            if store.selection.isEmpty {
-                Color.clear
-            } else {
-                OverridesForm()
-            }
+            OverridesForm()
         }
         .onAppear { isSidebarFocused = true }
         .searchable(text: $searchText, placement: .sidebar, prompt: Text("Buscar"))

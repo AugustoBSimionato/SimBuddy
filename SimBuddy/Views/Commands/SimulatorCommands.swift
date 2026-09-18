@@ -8,48 +8,48 @@
 import SwiftUI
 
 struct SimulatorCommands: Commands {
-    let store: SimulatorStore
+    let viewModel: SimulatorViewModel
 
     var body: some Commands {
         CommandMenu("Simulador") {
             Button("Atualizar lista", systemImage: "arrow.clockwise") {
-                Task { await store.refresh() }
+                Task { await viewModel.refresh() }
             }
             .keyboardShortcut("r")
 
             Divider()
 
             Button("Iniciar", systemImage: "play") {
-                Task { await store.boot(store.selection) }
+                Task { await viewModel.boot(viewModel.selection) }
             }
-            .disabled(!store.canBoot(store.selection))
+            .disabled(!viewModel.canBoot(viewModel.selection))
 
             Button("Encerrar", systemImage: "stop") {
-                Task { await store.shutdown(store.selection) }
+                Task { await viewModel.shutdown(viewModel.selection) }
             }
-            .disabled(!store.canShutdown(store.selection))
+            .disabled(!viewModel.canShutdown(viewModel.selection))
 
             Divider()
 
             Button("Enviar arquivos…", systemImage: "square.and.arrow.up") {
-                store.isImportingFiles = true
+                viewModel.isImportingFiles = true
             }
             .keyboardShortcut("o")
-            .disabled(!store.canShare(with: store.selectedSimulator))
+            .disabled(!viewModel.canShare(with: viewModel.selectedSimulator))
 
             Divider()
 
             Button("Aplicar alterações", systemImage: "checkmark") {
-                Task { await store.applyOverrides() }
+                Task { await viewModel.applyOverrides() }
             }
             .keyboardShortcut(.return)
-            .disabled(!store.canApplyOverrides)
+            .disabled(!viewModel.canApplyOverrides)
 
             Button("Limpar alterações", systemImage: "eraser") {
-                Task { await store.clearOverrides() }
+                Task { await viewModel.clearOverrides() }
             }
             .keyboardShortcut("k")
-            .disabled(!store.canUpdateStatusBar)
+            .disabled(!viewModel.canUpdateStatusBar)
         }
     }
 }

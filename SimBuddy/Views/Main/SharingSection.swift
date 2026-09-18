@@ -10,7 +10,7 @@ import QuickLookThumbnailing
 import SwiftUI
 
 struct SharingSection: View {
-    @Environment(SimulatorStore.self) private var store
+    @Environment(SimulatorViewModel.self) private var store
 
     var body: some View {
         Section {
@@ -35,7 +35,7 @@ struct SharingSection: View {
 }
 
 private struct SharedFilesTray: View {
-    @Environment(SimulatorStore.self) private var store
+    @Environment(SimulatorViewModel.self) private var store
     let simulator: Simulator
 
     @State private var items: [SharedItem] = []

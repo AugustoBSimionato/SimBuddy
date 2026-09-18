@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct MenuBarContent: View {
-    @Environment(SimulatorStore.self) private var store
+    @Environment(SimulatorViewModel.self) private var store
     @Environment(\.openWindow) private var openWindow
 
     var body: some View {

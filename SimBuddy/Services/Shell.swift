@@ -151,3 +151,33 @@ nonisolated extension Shell {
         }
     }
 }
+
+protocol SimulatorClient: Sendable {
+    func listSimulators() async -> Shell.Result
+    func boot(udid: String) async -> Shell.Result
+    func shutdown(udid: String) async -> Shell.Result
+    func delete(udid: String) async -> Shell.Result
+    func diskUsage(at url: URL) async -> Int64?
+    func installedApps(udid: String, dataURL: URL?) async -> [SimulatorMetrics.App]
+    func addMedia(_ url: URL, to udid: String) async -> Shell.Result
+    func overrideStatusBar(_ target: Shell.StatusBarTarget, arguments: [String]) async -> Shell.Result
+    func clearStatusBar(_ target: Shell.StatusBarTarget) async -> Shell.Result
+}
+
+nonisolated struct SimctlClient: SimulatorClient {
+    func listSimulators() async -> Shell.Result { await Shell.listSimulators() }
+    func boot(udid: String) async -> Shell.Result { await Shell.boot(udid: udid) }
+    func shutdown(udid: String) async -> Shell.Result { await Shell.shutdown(udid: udid) }
+    func delete(udid: String) async -> Shell.Result { await Shell.delete(udid: udid) }
+    func diskUsage(at url: URL) async -> Int64? { await Shell.diskUsage(at: url) }
+    func installedApps(udid: String, dataURL: URL?) async -> [SimulatorMetrics.App] {
+        await Shell.installedApps(udid: udid, dataURL: dataURL)
+    }
+    func addMedia(_ url: URL, to udid: String) async -> Shell.Result { await Shell.addMedia(url, to: udid) }
+    func overrideStatusBar(_ target: Shell.StatusBarTarget, arguments: [String]) async -> Shell.Result {
+        await Shell.overrideStatusBar(target, arguments: arguments)
+    }
+    func clearStatusBar(_ target: Shell.StatusBarTarget) async -> Shell.Result {
+        await Shell.clearStatusBar(target)
+    }
+}
