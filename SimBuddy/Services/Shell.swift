@@ -54,8 +54,16 @@ nonisolated enum Shell {
         }
 
         // Drain the pipes before waiting, otherwise a full pipe buffer deadlocks the child.
+        let errorReader = ErrorReader()
+        let drained = DispatchGroup()
+        drained.enter()
+        DispatchQueue.global().async {
+            errorReader.data = standardError.fileHandleForReading.readDataToEndOfFile()
+            drained.leave()
+        }
         let outputData = standardOutput.fileHandleForReading.readDataToEndOfFile()
-        let errorData = standardError.fileHandleForReading.readDataToEndOfFile()
+        drained.wait()
+        let errorData = errorReader.data
         process.waitUntilExit()
 
         return Result(
@@ -63,6 +71,10 @@ nonisolated enum Shell {
             standardOutput: outputData,
             standardError: String(decoding: errorData, as: UTF8.self)
         )
+    }
+
+    private final class ErrorReader: @unchecked Sendable {
+        var data = Data()
     }
 }
 
