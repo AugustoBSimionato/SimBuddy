@@ -12,9 +12,15 @@ final class AgentMonitor {
         var lastSeen: Date
     }
 
+    struct ActiveOperation: Equatable, Identifiable {
+        let id: UUID
+        let event: AgentEvent
+    }
+
     private(set) var settings: AgentSettings
     private(set) var events: [AgentEvent]
     private(set) var sessions: [Session] = []
+    private(set) var activeOperations: [ActiveOperation] = []
     private(set) var bridgeError: String?
     private(set) var persistenceError: String?
     private(set) var notificationStatus: UNAuthorizationStatus = .notDetermined
@@ -147,6 +153,18 @@ final class AgentMonitor {
     }
 
     private func record(_ event: AgentEvent) {
+        if let id = event.operationID {
+            if event.outcome.isTerminal {
+                activeOperations.removeAll { $0.id == id }
+            } else if event.outcome == .queued || event.outcome == .started {
+                let operation = ActiveOperation(id: id, event: event)
+                if let index = activeOperations.firstIndex(where: { $0.id == id }) {
+                    activeOperations[index] = operation
+                } else {
+                    activeOperations.append(operation)
+                }
+            }
+        }
         events.append(event)
         if events.count > 5_000 { events.removeFirst(events.count - 5_000) }
         saveTask?.cancel()

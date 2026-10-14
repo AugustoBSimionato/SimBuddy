@@ -32,5 +32,6 @@ struct SimBuddyApp: App {
             MenuBarContent()
                 .environment(viewModel)
         }
+        .menuBarExtraStyle(.menu)
     }
 }
