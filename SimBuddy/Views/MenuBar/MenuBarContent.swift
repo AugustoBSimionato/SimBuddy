@@ -22,6 +22,18 @@ struct MenuBarContent: View {
 
         Divider()
 
+        Button("Monitoramento de agentes", systemImage: store.agentMonitor.enabled ? "shield.fill" : "shield") {
+            store.showsAgentMonitoring = true
+            openWindow(id: SimBuddyApp.mainWindowID)
+            NSApp.activate()
+        }
+        Text(store.agentMonitor.enabled ? "Monitoramento ativado" : "Monitoramento desativado")
+            .foregroundStyle(.secondary)
+        Text("\(store.agentMonitor.protectedCount) simuladores protegidos")
+            .foregroundStyle(.secondary)
+
+        Divider()
+
         Button("Abrir o SimBuddy", systemImage: "macwindow") {
             openWindow(id: SimBuddyApp.mainWindowID)
             NSApp.activate()

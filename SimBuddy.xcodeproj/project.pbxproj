@@ -6,8 +6,39 @@
 	objectVersion = 77;
 	objects = {
 
+
+/* Begin PBXBuildFile section */
+        A10000000000000000000001 /* AgentCore in Frameworks */ = {isa = PBXBuildFile; productRef = A10000000000000000000002; };
+        A10000000000000000000003 /* AgentMCP in Frameworks */ = {isa = PBXBuildFile; productRef = A10000000000000000000004; };
+        A10000000000000000000005 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10000000000000000000006; };
+        A10000000000000000000007 /* simbuddy-mcp in Embed Executables */ = {isa = PBXBuildFile; fileRef = A10000000000000000000008; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+        A10000000000000000000009 = {isa = PBXContainerItemProxy; containerPortal = 4EA4318D2E51056F007D383A; proxyType = 1; remoteGlobalIDString = A10000000000000000000010; remoteInfo = "simbuddy-mcp"; };
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+        A10000000000000000000011 = {isa = PBXCopyFilesBuildPhase; buildActionMask = 2147483647; dstPath = ""; dstSubfolderSpec = 6; files = (A10000000000000000000007, ); name = "Embed Executables"; runOnlyForDeploymentPostprocessing = 0; };
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+        A10000000000000000000012 = {isa = PBXTargetDependency; target = A10000000000000000000010; targetProxy = A10000000000000000000009; };
+/* End PBXTargetDependency section */
+
+/* Begin XCLocalSwiftPackageReference section */
+        A10000000000000000000013 = {isa = XCLocalSwiftPackageReference; relativePath = AgentIntegration; };
+/* End XCLocalSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+        A10000000000000000000002 = {isa = XCSwiftPackageProductDependency; productName = AgentCore; };
+        A10000000000000000000004 = {isa = XCSwiftPackageProductDependency; productName = AgentMCP; };
+/* End XCSwiftPackageProductDependency section */
+
 /* Begin PBXFileReference section */
 		4EA431952E51056F007D383A /* SimBuddy.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SimBuddy.app; sourceTree = BUILT_PRODUCTS_DIR; };
+        A10000000000000000000006 = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MCPLauncher/main.swift; sourceTree = SOURCE_ROOT; };
+        A10000000000000000000008 = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; path = "simbuddy-mcp"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -23,9 +54,11 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+                A10000000000000000000001,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+        A10000000000000000000014 = {isa = PBXFrameworksBuildPhase; buildActionMask = 2147483647; files = (A10000000000000000000003, ); runOnlyForDeploymentPostprocessing = 0; };
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -33,6 +66,7 @@
 			isa = PBXGroup;
 			children = (
 				4EA431972E51056F007D383A /* SimBuddy */,
+                A10000000000000000000006,
 				4EA431962E51056F007D383A /* Products */,
 			);
 			sourceTree = "<group>";
@@ -41,6 +75,7 @@
 			isa = PBXGroup;
 			children = (
 				4EA431952E51056F007D383A /* SimBuddy.app */,
+                A10000000000000000000008,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -55,21 +90,34 @@
 				4EA431912E51056F007D383A /* Sources */,
 				4EA431922E51056F007D383A /* Frameworks */,
 				4EA431932E51056F007D383A /* Resources */,
+                A10000000000000000000011,
 			);
 			buildRules = (
 			);
 			dependencies = (
+                A10000000000000000000012,
 			);
 			fileSystemSynchronizedGroups = (
 				4EA431972E51056F007D383A /* SimBuddy */,
 			);
 			name = SimBuddy;
 			packageProductDependencies = (
+                A10000000000000000000002,
 			);
 			productName = SimBuddy;
 			productReference = 4EA431952E51056F007D383A /* SimBuddy.app */;
 			productType = "com.apple.product-type.application";
 		};
+        A10000000000000000000010 /* simbuddy-mcp */ = {
+            isa = PBXNativeTarget;
+            buildConfigurationList = A10000000000000000000015;
+            buildPhases = (A10000000000000000000016, A10000000000000000000014, );
+            buildRules = (); dependencies = ();
+            name = "simbuddy-mcp";
+            packageProductDependencies = (A10000000000000000000004, );
+            productName = "simbuddy-mcp"; productReference = A10000000000000000000008;
+            productType = "com.apple.product-type.tool";
+        };
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -126,8 +174,10 @@
 			productRefGroup = 4EA431962E51056F007D383A /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
+            packageReferences = (A10000000000000000000013, );
 			targets = (
 				4EA431942E51056F007D383A /* SimBuddy */,
+                A10000000000000000000010,
 			);
 		};
 /* End PBXProject section */
@@ -150,6 +200,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+        A10000000000000000000016 = {isa = PBXSourcesBuildPhase; buildActionMask = 2147483647; files = (A10000000000000000000005, ); runOnlyForDeploymentPostprocessing = 0; };
 /* End PBXSourcesBuildPhase section */
 
 /* Begin XCBuildConfiguration section */
@@ -375,6 +426,16 @@
 			};
 			name = Release;
 		};
+        A10000000000000000000017 = {isa = XCBuildConfiguration; buildSettings = {
+            CODE_SIGN_STYLE = Automatic; DEVELOPMENT_TEAM = HXDK8H2H24; ENABLE_HARDENED_RUNTIME = YES;
+            MACOSX_DEPLOYMENT_TARGET = 26.0; PRODUCT_NAME = "simbuddy-mcp";
+            SKIP_INSTALL = YES; SWIFT_VERSION = 6.0; SWIFT_EMIT_LOC_STRINGS = NO;
+        }; name = Debug; };
+        A10000000000000000000018 = {isa = XCBuildConfiguration; buildSettings = {
+            CODE_SIGN_STYLE = Automatic; DEVELOPMENT_TEAM = HXDK8H2H24; ENABLE_HARDENED_RUNTIME = YES;
+            MACOSX_DEPLOYMENT_TARGET = 26.0; PRODUCT_NAME = "simbuddy-mcp";
+            SKIP_INSTALL = YES; SWIFT_VERSION = 6.0; SWIFT_EMIT_LOC_STRINGS = NO;
+        }; name = Release; };
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -396,6 +457,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
+        A10000000000000000000015 = {isa = XCConfigurationList; buildConfigurations = (A10000000000000000000017, A10000000000000000000018, ); defaultConfigurationIsVisible = 0; defaultConfigurationName = Release; };
 /* End XCConfigurationList section */
 	};
 	rootObject = 4EA4318D2E51056F007D383A /* Project object */;

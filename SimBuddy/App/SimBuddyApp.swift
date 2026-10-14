@@ -12,7 +12,7 @@ struct SimBuddyApp: App {
     static let mainWindowID = "main"
 
     @NSApplicationDelegateAdaptor(AppDelegate.self) private var appDelegate
-    @State private var viewModel = SimulatorViewModel()
+    private var viewModel: SimulatorViewModel { appDelegate.viewModel }
 
     var body: some Scene {
         Window("SimBuddy", id: Self.mainWindowID) {

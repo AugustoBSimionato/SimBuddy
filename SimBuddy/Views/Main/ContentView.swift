@@ -10,6 +10,7 @@ import UniformTypeIdentifiers
 
 struct ContentView: View {
     @Environment(SimulatorViewModel.self) private var store
+    @Environment(\.openWindow) private var openWindow
     @State private var searchText = ""
     @SceneStorage("showsRunningOnly") private var showsRunningOnly = false
     @FocusState private var isSidebarFocused: Bool
@@ -33,13 +34,19 @@ struct ContentView: View {
                     }
                 }
         } detail: {
-            OverridesForm()
+            if store.showsAgentMonitoring {
+                AgentMonitoringView(monitor: store.agentMonitor)
+            } else {
+                OverridesForm()
+            }
         }
-        .onAppear { isSidebarFocused = true }
+        .onAppear {
+            isSidebarFocused = true
+            store.openMainWindow = { [openWindow] in openWindow(id: SimBuddyApp.mainWindowID) }
+        }
         .searchable(text: $searchText, placement: .sidebar, prompt: Text("Buscar"))
         .navigationSubtitle(subtitle)
         .frame(minWidth: 780, minHeight: 540)
-        .task { await store.monitor() }
         .alert(
             store.failure?.title ?? "",
             isPresented: Binding(

@@ -82,7 +82,7 @@ nonisolated enum Shell {
 
 nonisolated extension Shell {
     static func listSimulators() async -> Result {
-        await simctl(["list", "devices", "--json"])
+        await simctl(["list", "--json"])
     }
 
     static func boot(udid: String) async -> Result {

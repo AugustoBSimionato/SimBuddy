@@ -5,6 +5,7 @@
 //  Created by Augusto Simionato on 11/09/26.
 //
 
+import AgentCore
 import SwiftUI
 
 struct SimulatorSidebar: View {
@@ -18,11 +19,14 @@ struct SimulatorSidebar: View {
         let sections = visibleSections
         let sidebarSelection = Binding<Set<SidebarItem>>(
             get: {
-                store.selection.isEmpty
+                store.showsAgentMonitoring
+                    ? [.agents]
+                    : store.selection.isEmpty
                     ? [.home]
                     : Set(store.selection.map(SidebarItem.simulator))
             },
             set: { items in
+                store.showsAgentMonitoring = items.contains(.agents)
                 store.selection = Set(items.compactMap(\.simulatorID))
             }
         )
@@ -31,11 +35,13 @@ struct SimulatorSidebar: View {
             Section {
                 Label("Início", systemImage: "house")
                     .tag(SidebarItem.home)
+                Label("Monitoramento de agentes", systemImage: "shield.lefthalf.filled")
+                    .tag(SidebarItem.agents)
             }
             ForEach(sections, id: \.key) { section in
                 Section(section.key.name) {
                     ForEach(section.value) { simulator in
-                        SimulatorRow(simulator: simulator, isBusy: store.busySimulators.contains(simulator.id))
+                        SimulatorRow(simulator: simulator, isBusy: store.busySimulators.contains(simulator.id), isProtected: store.agentMonitor.protection(for: simulator.id).enabled)
                             .tag(SidebarItem.simulator(simulator.id))
                     }
                 }
@@ -49,9 +55,6 @@ struct SimulatorSidebar: View {
         } primaryAction: { items in
             let ids = Set(items.compactMap(\.simulatorID))
             Task { await store.boot(ids) }
-        }
-        .overlay {
-            emptyState(hasVisibleSimulators: !sections.isEmpty)
         }
         .task(id: store.selection) {
             await store.loadMetrics(for: store.selection)
@@ -89,32 +92,12 @@ struct SimulatorSidebar: View {
         return count == 1 ? "Excluir simulador?" : "Excluir \(count) simuladores?"
     }
 
-    @ViewBuilder
-    private func emptyState(hasVisibleSimulators: Bool) -> some View {
-        if !store.hasLoaded {
-            ProgressView()
-        } else if store.simulators.isEmpty {
-            ContentUnavailableView(
-                "Nenhum simulador",
-                systemImage: "iphone.slash",
-                description: Text("Crie simuladores no Xcode para vê-los aqui.")
-            )
-        } else if !hasVisibleSimulators, !searchText.isEmpty {
-            ContentUnavailableView.search(text: searchText)
-        } else if !hasVisibleSimulators {
-            ContentUnavailableView {
-                Label("Nenhum simulador em execução", systemImage: "iphone.slash")
-            } description: {
-                Text("Inicie um simulador para alterar a barra de status dele.")
-            } actions: {
-                Button("Mostrar todos") { showsRunningOnly = false }
-            }
-        }
-    }
+
 }
 
 private enum SidebarItem: Hashable {
     case home
+    case agents
     case simulator(Simulator.ID)
 
     var simulatorID: Simulator.ID? {
@@ -126,6 +109,7 @@ private enum SidebarItem: Hashable {
 private struct SimulatorRow: View {
     let simulator: Simulator
     let isBusy: Bool
+    let isProtected: Bool
 
     var body: some View {
         Label {
@@ -133,6 +117,11 @@ private struct SimulatorRow: View {
                 Text(simulator.name)
                     .lineLimit(1)
                 Spacer()
+                if isProtected {
+                    Image(systemName: "lock.shield")
+                        .foregroundStyle(.secondary)
+                        .accessibilityLabel("Proteção contra agentes ativada")
+                }
                 statusIndicator
             }
         } icon: {

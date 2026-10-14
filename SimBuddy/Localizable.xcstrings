@@ -529,6 +529,38 @@
         }
       }
     },
+    "%@: %@ · %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$@: %2$@ · %3$@"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@: %@ · %@"
+          }
+        }
+      }
+    },
+    "%@: %lld eventos. Último: %@ · %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$@: %2$lld events. Latest: %3$@ · %4$@"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@: %lld eventos. Último: %@ · %@"
+          }
+        }
+      }
+    },
     "%lld barras" : {
       "localizations" : {
         "bg" : {
@@ -1234,6 +1266,46 @@
                 "stringUnit" : {
                   "state" : "machine_translated",
                   "value" : "%lld格"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "%lld conexões" : {
+      "localizations" : {
+        "en" : {
+          "variations" : {
+            "plural" : {
+              "one" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%lld connection"
+                }
+              },
+              "other" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%lld connections"
+                }
+              }
+            }
+          }
+        },
+        "pt-BR" : {
+          "variations" : {
+            "plural" : {
+              "one" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%lld conexão"
+                }
+              },
+              "other" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%lld conexões"
                 }
               }
             }
@@ -3845,6 +3917,62 @@
         }
       }
     },
+    "%lld simuladores protegidos" : {
+      "localizations" : {
+        "en" : {
+          "variations" : {
+            "plural" : {
+              "one" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%lld protected simulator"
+                }
+              },
+              "other" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%lld protected simulators"
+                }
+              }
+            }
+          }
+        },
+        "pt-BR" : {
+          "variations" : {
+            "plural" : {
+              "one" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%lld simulador protegido"
+                }
+              },
+              "other" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%lld simuladores protegidos"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "A proteção do simulador bloqueia esta categoria: %@." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Simulator protection blocks this category: %@."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "A proteção do simulador bloqueia esta categoria: %@."
+          }
+        }
+      }
+    },
     "Abrir o SimBuddy" : {
       "localizations" : {
         "bg" : {
@@ -4185,6 +4313,38 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "快速操作"
+          }
+        }
+      }
+    },
+    "Adicione este servidor stdio nas configurações MCP do seu agente. O formato de configuração pode variar entre clientes." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Add this stdio server to your agent’s MCP settings. The configuration format may vary between clients."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Adicione este servidor stdio nas configurações MCP do seu agente. O formato de configuração pode variar entre clientes."
+          }
+        }
+      }
+    },
+    "Ajustes do Sistema" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "System Settings"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ajustes do Sistema"
           }
         }
       }
@@ -5769,6 +5929,22 @@
                 }
               }
             }
+          }
+        }
+      }
+    },
+    "Ao permitir testes, o Xcode e os scripts do projeto podem modificar ou reiniciar o simulador internamente." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "When tests are allowed, Xcode and project scripts may modify or restart the simulator internally."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ao permitir testes, o Xcode e os scripts do projeto podem modificar ou reiniciar o simulador internamente."
           }
         }
       }
@@ -7695,6 +7871,70 @@
         }
       }
     },
+    "As operações dos agentes e as mudanças externas observáveis aparecerão aqui." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Agent operations and observable external changes will appear here."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "As operações dos agentes e as mudanças externas observáveis aparecerão aqui."
+          }
+        }
+      }
+    },
+    "As regras ficam salvas para este simulador e se aplicam às operações feitas pelo MCP do SimBuddy." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Rules are saved for this simulator and apply to operations performed through SimBuddy’s MCP server."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "As regras ficam salvas para este simulador e se aplicam às operações feitas pelo MCP do SimBuddy."
+          }
+        }
+      }
+    },
+    "Ative o monitoramento de agentes para usar a integração MCP." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Enable agent monitoring to use the MCP integration."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ative o monitoramento de agentes para usar a integração MCP."
+          }
+        }
+      }
+    },
+    "Atividade no simulador" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Simulator activity"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Atividade no simulador"
+          }
+        }
+      }
+    },
     "Ativo" : {
       "localizations" : {
         "bg" : {
@@ -8555,6 +8795,22 @@
         }
       }
     },
+    "Bloqueada" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Blocked"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bloqueada"
+          }
+        }
+      }
+    },
     "Buscar" : {
       "localizations" : {
         "bg" : {
@@ -8723,6 +8979,38 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "寻找"
+          }
+        }
+      }
+    },
+    "Cancelada" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cancelled"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cancelada"
+          }
+        }
+      }
+    },
+    "Capturas e gravações" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Screenshots and recordings"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Capturas e gravações"
           }
         }
       }
@@ -9415,6 +9703,38 @@
         }
       }
     },
+    "Categoria" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Category"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Categoria"
+          }
+        }
+      }
+    },
+    "Categorias" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Categories"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Categorias"
+          }
+        }
+      }
+    },
     "Celular" : {
       "localizations" : {
         "bg" : {
@@ -9583,6 +9903,22 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "手机"
+          }
+        }
+      }
+    },
+    "Comandos diretos do terminal, Xcode ou outros conectores ficam fora desses bloqueios." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Direct commands from Terminal, Xcode or other connectors are outside these blocks."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Comandos diretos do terminal, Xcode ou outros conectores ficam fora desses bloqueios."
           }
         }
       }
@@ -9759,6 +10095,54 @@
         }
       }
     },
+    "Concluída" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Completed"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Concluída"
+          }
+        }
+      }
+    },
+    "Concluído" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Done"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Concluído"
+          }
+        }
+      }
+    },
+    "Conectar um agente" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Connect an agent"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Conectar um agente"
+          }
+        }
+      }
+    },
     "Conectividade" : {
       "localizations" : {
         "bg" : {
@@ -9931,6 +10315,70 @@
         }
       }
     },
+    "Conexões MCP" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "MCP connections"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Conexões MCP"
+          }
+        }
+      }
+    },
+    "Configurações do simulador" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Simulator settings"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Configurações do simulador"
+          }
+        }
+      }
+    },
+    "Configurar MCP…" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Configure MCP…"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Configurar MCP…"
+          }
+        }
+      }
+    },
+    "Consultas" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Queries"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Consultas"
+          }
+        }
+      }
+    },
     "Copiar caminho do simulador" : {
       "localizations" : {
         "bg" : {
@@ -10099,6 +10547,22 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "复制模拟器路径"
+          }
+        }
+      }
+    },
+    "Copiar configuração" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Copy configuration"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Copiar configuração"
           }
         }
       }
@@ -10276,6 +10740,7 @@
       }
     },
     "Crie simuladores no Xcode para vê-los aqui." : {
+      "extractionState" : "stale",
       "localizations" : {
         "bg" : {
           "stringUnit" : {
@@ -10443,6 +10908,22 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "在Xcode中创建模拟器，在这里查看它们。"
+          }
+        }
+      }
+    },
+    "Data" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Date"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Data"
           }
         }
       }
@@ -10619,6 +11100,54 @@
         }
       }
     },
+    "Desligado" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Shut down"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Desligado"
+          }
+        }
+      }
+    },
+    "Desligar e reiniciar" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Shut down and reboot"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Desligar e reiniciar"
+          }
+        }
+      }
+    },
+    "Detalhe" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Details"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Detalhe"
+          }
+        }
+      }
+    },
     "Disponíveis" : {
       "localizations" : {
         "bg" : {
@@ -10787,6 +11316,22 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "可用"
+          }
+        }
+      }
+    },
+    "Disponível na lista" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Available in the list"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Disponível na lista"
           }
         }
       }
@@ -11131,6 +11676,22 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "正在执行中"
+          }
+        }
+      }
+    },
+    "Encerrando" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Shutting down"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Encerrando"
           }
         }
       }
@@ -12339,6 +12900,22 @@
         }
       }
     },
+    "Estado alterado" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "State changed"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Estado alterado"
+          }
+        }
+      }
+    },
     "Estado da bateria" : {
       "localizations" : {
         "bg" : {
@@ -12507,6 +13084,22 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "电池状态"
+          }
+        }
+      }
+    },
+    "Eventos próximos são agrupados em 3 segundos. Bloqueios e falhas geram avisos imediatos. O histórico funciona mesmo sem permissão para notificações." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Events within 3 seconds are grouped. Blocks and failures trigger immediate alerts. History works even without notification permission."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Eventos próximos são agrupados em 3 segundos. Bloqueios e falhas geram avisos imediatos. O histórico funciona mesmo sem permissão para notificações."
           }
         }
       }
@@ -13917,6 +14510,22 @@
         }
       }
     },
+    "Excluir e apagar dados" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Delete and erase data"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Excluir e apagar dados"
+          }
+        }
+      }
+    },
     "Excluir simulador" : {
       "localizations" : {
         "bg" : {
@@ -14089,6 +14698,22 @@
         }
       }
     },
+    "Executar testes" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Run tests"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Executar testes"
+          }
+        }
+      }
+    },
     "Falha" : {
       "localizations" : {
         "bg" : {
@@ -14257,6 +14882,54 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "失败"
+          }
+        }
+      }
+    },
+    "Falhou" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Failed"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Falhou"
+          }
+        }
+      }
+    },
+    "Histórico" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "History"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Histórico"
+          }
+        }
+      }
+    },
+    "Histórico de atividades" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Activity history"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Histórico de atividades"
           }
         }
       }
@@ -14605,6 +15278,54 @@
         }
       }
     },
+    "Indisponível na lista" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Unavailable in the list"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Indisponível na lista"
+          }
+        }
+      }
+    },
+    "Iniciada" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Started"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Iniciada"
+          }
+        }
+      }
+    },
+    "Iniciando" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Booting"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Iniciando"
+          }
+        }
+      }
+    },
     "Iniciar" : {
       "localizations" : {
         "bg" : {
@@ -14949,6 +15670,22 @@
         }
       }
     },
+    "Iniciar simuladores" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Boot simulators"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Iniciar simuladores"
+          }
+        }
+      }
+    },
     "Inicie o simulador para enviar arquivos." : {
       "localizations" : {
         "bg" : {
@@ -15122,6 +15859,7 @@
       }
     },
     "Inicie um simulador para alterar a barra de status dele." : {
+      "extractionState" : "stale",
       "localizations" : {
         "bg" : {
           "stringUnit" : {
@@ -15439,6 +16177,12 @@
             "value" : "Inicie um simulador pela barra lateral para personalizar a barra de estado."
           }
         },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Запустите симулятор с боковой панели, чтобы настроить строку состояния."
+          }
+        },
         "sv" : {
           "stringUnit" : {
             "state" : "machine_translated",
@@ -15449,12 +16193,6 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Запустіть симулятор на бічній панелі, щоб налаштувати рядок стану."
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "machine_translated",
-            "value" : "Запустите симулятор с боковой панели, чтобы настроить строку состояния."
           }
         },
         "zh-Hans" : {
@@ -15637,6 +16375,38 @@
         }
       }
     },
+    "Instalar e executar apps" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Install and run apps"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Instalar e executar apps"
+          }
+        }
+      }
+    },
+    "Interrompida" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Interrupted"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Interrompida"
+          }
+        }
+      }
+    },
     "Limpar alterações" : {
       "localizations" : {
         "bg" : {
@@ -15805,6 +16575,38 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "清除更改"
+          }
+        }
+      }
+    },
+    "Mantenha o SimBuddy aberto e o monitoramento ativado. Oriente o agente a usar as ferramentas do SimBuddy para operar simuladores." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Keep SimBuddy running with monitoring enabled. Instruct your agent to use SimBuddy tools for simulator operations."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mantenha o SimBuddy aberto e o monitoramento ativado. Oriente o agente a usar as ferramentas do SimBuddy para operar simuladores."
+          }
+        }
+      }
+    },
+    "Mídia, clipboard e notificações" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Media, clipboard and notifications"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mídia, clipboard e notificações"
           }
         }
       }
@@ -16149,6 +16951,70 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "无线网络模式"
+          }
+        }
+      }
+    },
+    "Monitoramento" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Monitoring"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Monitoramento"
+          }
+        }
+      }
+    },
+    "Monitoramento ativado" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Monitoring enabled"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Monitoramento ativado"
+          }
+        }
+      }
+    },
+    "Monitoramento de agentes" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Agent monitoring"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Monitoramento de agentes"
+          }
+        }
+      }
+    },
+    "Monitoramento desativado" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Monitoring disabled"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Monitoramento desativado"
           }
         }
       }
@@ -16670,6 +17536,7 @@
       }
     },
     "Mostrar todos" : {
+      "extractionState" : "stale",
       "localizations" : {
         "bg" : {
           "stringUnit" : {
@@ -16837,6 +17704,22 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "显示全部"
+          }
+        }
+      }
+    },
+    "Na fila" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Queued"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Na fila"
           }
         }
       }
@@ -17009,6 +17892,38 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "无法应用更改"
+          }
+        }
+      }
+    },
+    "Não foi possível carregar as regras de agentes. A integração está desativada." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Could not load agent rules. The integration is disabled."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Não foi possível carregar as regras de agentes. A integração está desativada."
+          }
+        }
+      }
+    },
+    "Não foi possível consultar os simuladores antes da execução." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Could not query simulators before execution."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Não foi possível consultar os simuladores antes da execução."
           }
         }
       }
@@ -18045,6 +18960,22 @@
         }
       }
     },
+    "Não foi possível salvar as regras ou o histórico de agentes." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Could not save agent rules or history."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Não foi possível salvar as regras ou o histórico de agentes."
+          }
+        }
+      }
+    },
     "Nenhum app encontrado" : {
       "localizations" : {
         "bg" : {
@@ -18218,6 +19149,7 @@
       }
     },
     "Nenhum simulador" : {
+      "extractionState" : "stale",
       "localizations" : {
         "bg" : {
           "stringUnit" : {
@@ -18557,6 +19489,22 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "没有模拟器正在运行"
+          }
+        }
+      }
+    },
+    "Nenhuma atividade" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No activity"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nenhuma atividade"
           }
         }
       }
@@ -19249,6 +20197,54 @@
         }
       }
     },
+    "Notificações" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Notifications"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Notificações"
+          }
+        }
+      }
+    },
+    "Notificações não permitidas" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Notifications not allowed"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Notificações não permitidas"
+          }
+        }
+      }
+    },
+    "Notificações permitidas" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Notifications allowed"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Notificações permitidas"
+          }
+        }
+      }
+    },
     "O app Arquivos ainda não está disponível neste simulador." : {
       "localizations" : {
         "bg" : {
@@ -19593,6 +20589,22 @@
         }
       }
     },
+    "O monitoramento foi desativado antes da execução." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Monitoring was disabled before execution."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "O monitoramento foi desativado antes da execução."
+          }
+        }
+      }
+    },
     "O SimBuddy verifica a cada poucos segundos se algum simulador foi iniciado ou encerrado." : {
       "localizations" : {
         "bg" : {
@@ -19765,6 +20777,22 @@
         }
       }
     },
+    "O simctl não preservou o texto no clipboard do simulador. A operação não foi confirmada." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "simctl did not retain the text on the simulator clipboard. The operation was not confirmed."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "O simctl não preservou o texto no clipboard do simulador. A operação não foi confirmada."
+          }
+        }
+      }
+    },
     "O simulador e todos os seus dados serão removidos permanentemente." : {
       "localizations" : {
         "bg" : {
@@ -19933,6 +20961,22 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "模拟器和所有数据将被永久删除。"
+          }
+        }
+      }
+    },
+    "Observada externamente" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Observed externally"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Observada externamente"
           }
         }
       }
@@ -20281,6 +21325,70 @@
         }
       }
     },
+    "Operação" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Operation"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Operação"
+          }
+        }
+      }
+    },
+    "Operação de agente bloqueada" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Agent operation blocked"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Operação de agente bloqueada"
+          }
+        }
+      }
+    },
+    "Operação não suportada" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Unsupported operation"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Operação não suportada"
+          }
+        }
+      }
+    },
+    "Operação ou parâmetros inválidos. Nenhum comando foi executado." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Invalid operation or parameters. No command was executed."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Operação ou parâmetros inválidos. Nenhum comando foi executado."
+          }
+        }
+      }
+    },
     "Operadora" : {
       "localizations" : {
         "bg" : {
@@ -20453,6 +21561,54 @@
         }
       }
     },
+    "Origem" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Source"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Origem"
+          }
+        }
+      }
+    },
+    "Origem desconhecida" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Unknown source"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Origem desconhecida"
+          }
+        }
+      }
+    },
+    "Os nomes das conexões são informados pelos clientes e não representam uma identidade verificada." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Connection names are reported by clients and do not represent a verified identity."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Os nomes das conexões são informados pelos clientes e não representam uma identidade verificada."
+          }
+        }
+      }
+    },
     "Os simuladores e todos os seus dados serão removidos permanentemente." : {
       "localizations" : {
         "bg" : {
@@ -20621,6 +21777,38 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "模拟器和所有数据将被永久删除。"
+          }
+        }
+      }
+    },
+    "Permissão ainda não solicitada" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Permission not yet requested"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Permissão ainda não solicitada"
+          }
+        }
+      }
+    },
+    "Permitir: %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Allow: %@"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Permitir: %@"
           }
         }
       }
@@ -20969,6 +22157,70 @@
         }
       }
     },
+    "Proteção contra agentes" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Agent protection"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Proteção contra agentes"
+          }
+        }
+      }
+    },
+    "Proteção contra agentes ativada" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Agent protection enabled"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Proteção contra agentes ativada"
+          }
+        }
+      }
+    },
+    "Proteger de agentes" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Protect from agents"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Proteger de agentes"
+          }
+        }
+      }
+    },
+    "Receba avisos e controle as operações dos agentes conectados. O monitor continua ativo com a janela fechada enquanto o SimBuddy estiver em execução." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Get alerts and control operations from connected agents. Monitoring continues with the window closed while SimBuddy is running."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Receba avisos e controle as operações dos agentes conectados. O monitor continua ativo com a janela fechada enquanto o SimBuddy estiver em execução."
+          }
+        }
+      }
+    },
     "Rede de dados" : {
       "localizations" : {
         "bg" : {
@@ -21313,6 +22565,70 @@
         }
       }
     },
+    "Resultado" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Result"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Resultado"
+          }
+        }
+      }
+    },
+    "Seção do monitoramento" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Monitoring section"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Seção do monitoramento"
+          }
+        }
+      }
+    },
+    "Seção do simulador" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Simulator section"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Seção do simulador"
+          }
+        }
+      }
+    },
+    "Selecione apenas um simulador na barra lateral para configurar sua proteção contra agentes." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Select a single simulator in the sidebar to configure its agent protection."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Selecione apenas um simulador na barra lateral para configurar sua proteção contra agentes."
+          }
+        }
+      }
+    },
     "Selecione o simulador para carregar os apps" : {
       "localizations" : {
         "bg" : {
@@ -21481,6 +22797,22 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "选择模拟器来加载应用程序"
+          }
+        }
+      }
+    },
+    "Selecione um simulador" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Select a simulator"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Selecione um simulador"
           }
         }
       }
@@ -21829,6 +23161,22 @@
         }
       }
     },
+    "Sessão" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Session"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sessão"
+          }
+        }
+      }
+    },
     "SimBuddy" : {
       "localizations" : {
         "bg" : {
@@ -22173,6 +23521,22 @@
         }
       }
     },
+    "Simuladores" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Simulators"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Simuladores"
+          }
+        }
+      }
+    },
     "Simuladores em execução" : {
       "localizations" : {
         "bg" : {
@@ -22319,6 +23683,12 @@
             "value" : "Simuladores em execução"
           }
         },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Запущенные симуляторы"
+          }
+        },
         "sv" : {
           "stringUnit" : {
             "state" : "machine_translated",
@@ -22329,12 +23699,6 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Запущені симулятори"
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "machine_translated",
-            "value" : "Запущенные симуляторы"
           }
         },
         "zh-Hans" : {
@@ -22689,6 +24053,22 @@
         }
       }
     },
+    "Solicitada" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Requested"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Solicitada"
+          }
+        }
+      }
+    },
     "Solte arquivos na bandeja para enviá-los ao simulador: imagens e vídeos vão para o app Fotos; o resto, para o app Arquivos. Itens do Fotos só podem ser excluídos no próprio simulador." : {
       "localizations" : {
         "bg" : {
@@ -23033,6 +24413,38 @@
         }
       }
     },
+    "Todas" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "All"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Todas"
+          }
+        }
+      }
+    },
+    "Todos" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "All"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Todos"
+          }
+        }
+      }
+    },
     "Visão geral" : {
       "localizations" : {
         "bg" : {
@@ -23179,6 +24591,12 @@
             "value" : "Visão geral"
           }
         },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Обзор"
+          }
+        },
         "sv" : {
           "stringUnit" : {
             "state" : "machine_translated",
@@ -23189,12 +24607,6 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Огляд"
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "machine_translated",
-            "value" : "Обзор"
           }
         },
         "zh-Hans" : {

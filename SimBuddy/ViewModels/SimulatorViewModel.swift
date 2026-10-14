@@ -6,6 +6,7 @@
 //
 
 import Accessibility
+import AppKit
 import Foundation
 import Observation
 
@@ -34,13 +35,18 @@ final class SimulatorViewModel {
     var overrides = StatusBarOverrides()
     var failure: Failure?
     var isImportingFiles = false
+    var showsAgentMonitoring = false
+    let agentMonitor: AgentMonitor
 
-    @ObservationIgnored private var refreshGeneration = 0
     @ObservationIgnored private var confirmationTask: Task<Void, Never>?
+    @ObservationIgnored private var monitoringTask: Task<Void, Never>?
+    @ObservationIgnored private var refreshTask: Task<Bool, Never>?
+    @ObservationIgnored var openMainWindow: (() -> Void)?
     private let simulatorClient: any SimulatorClient
 
-    init(simulatorClient: any SimulatorClient = SimctlClient()) {
+    init(simulatorClient: any SimulatorClient = SimctlClient(), agentMonitor: AgentMonitor? = nil) {
         self.simulatorClient = simulatorClient
+        self.agentMonitor = agentMonitor ?? AgentMonitor()
         UserDefaults.standard.register(defaults: [Self.refreshesAutomaticallyKey: true])
     }
 
@@ -74,28 +80,53 @@ final class SimulatorViewModel {
 
     // MARK: - Refreshing
 
-    func refresh() async {
-        refreshGeneration += 1
-        let generation = refreshGeneration
-        let result = await simulatorClient.listSimulators()
-        guard generation == refreshGeneration else { return }
+    @discardableResult
+    func refresh() async -> Bool {
+        if let refreshTask { return await refreshTask.value }
+        let task = Task { await refreshSnapshot() }
+        refreshTask = task
+        let result = await task.value
+        refreshTask = nil
+        return result
+    }
 
+    private func refreshSnapshot() async -> Bool {
+        let result = await simulatorClient.listSimulators()
         if !hasLoaded { hasLoaded = true }
-        guard result.succeeded, let simulators = try? SimulatorList.decode(result.standardOutput) else { return }
+        guard result.succeeded, let simulators = try? SimulatorList.decode(result.standardOutput),
+              agentMonitor.receiveSnapshot(result.standardOutput) else { return false }
 
         if simulators != self.simulators { self.simulators = simulators }
         let simulatorIDs = Set(simulators.map(\.id))
         metrics = metrics.filter { simulatorIDs.contains($0.key) }
         let validSelection = selection.intersection(simulators.map(\.id))
         if validSelection != selection { selection = validSelection }
-        await loadMetrics(for: selection)
+        return true
     }
 
-    func monitor() async {
+    func startMonitoring() {
+        guard monitoringTask == nil else { return }
+        agentMonitor.start(refresh: { [weak self] in await self?.refresh() ?? false }, openEvent: { [weak self] id in
+            self?.showsAgentMonitoring = true
+            self?.agentMonitor.openEvent(id)
+            self?.openMainWindow?()
+            NSApp.activate()
+        })
+        monitoringTask = Task { await monitor() }
+    }
+
+    func stopMonitoring() {
+        monitoringTask?.cancel(); monitoringTask = nil
+        agentMonitor.shutdown()
+    }
+
+    private func monitor() async {
         await refresh()
         while !Task.isCancelled {
             try? await Task.sleep(for: .seconds(3))
-            if UserDefaults.standard.bool(forKey: Self.refreshesAutomaticallyKey) {
+            if Task.isCancelled { break }
+            agentMonitor.expireSessions()
+            if agentMonitor.enabled || UserDefaults.standard.bool(forKey: Self.refreshesAutomaticallyKey) {
                 await refresh()
             }
         }
@@ -136,6 +167,8 @@ final class SimulatorViewModel {
     func delete(_ ids: Set<Simulator.ID>) async {
         let targets = simulators(withIDs: ids).filter { !busySimulators.contains($0.id) }
         guard !targets.isEmpty else { return }
+        let internalOperation = agentMonitor.beginInternalOperation(Set(targets.map(\.id)))
+        defer { agentMonitor.endInternalOperation(internalOperation) }
 
         let targetIDs = Set(targets.map(\.id))
         busySimulators.formUnion(targetIDs)
@@ -172,6 +205,8 @@ final class SimulatorViewModel {
         failureTitle: (String) -> String
     ) async {
         guard !targets.isEmpty else { return }
+        let internalOperation = agentMonitor.beginInternalOperation(Set(targets.map(\.id)))
+        defer { agentMonitor.endInternalOperation(internalOperation) }
         let ids = Set(targets.map(\.id))
         busySimulators.formUnion(ids)
         for index in simulators.indices where ids.contains(simulators[index].id) {
