@@ -13,6 +13,8 @@ let package = Package(
     targets: [
         .target(name: "AgentCore"),
         .target(name: "AgentMCP", dependencies: ["AgentCore", .product(name: "MCP", package: "swift-sdk")]),
-        .executableTarget(name: "SimBuddyMCP", dependencies: ["AgentMCP"])
+        .executableTarget(name: "SimBuddyMCP", dependencies: ["AgentMCP"]),
+        .testTarget(name: "AgentCoreTests", dependencies: ["AgentCore"]),
+        .testTarget(name: "AgentMCPTests", dependencies: ["AgentMCP", "AgentCore", .product(name: "MCP", package: "swift-sdk")])
     ]
 )

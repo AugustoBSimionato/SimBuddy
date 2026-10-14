@@ -12,6 +12,10 @@
         A10000000000000000000003 /* AgentMCP in Frameworks */ = {isa = PBXBuildFile; productRef = A10000000000000000000004; };
         A10000000000000000000005 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10000000000000000000006; };
         A10000000000000000000007 /* simbuddy-mcp in Embed Executables */ = {isa = PBXBuildFile; fileRef = A10000000000000000000008; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+        B10000000000000000000001 = {isa = PBXBuildFile; fileRef = B10000000000000000000002; };
+        B10000000000000000000003 = {isa = PBXBuildFile; fileRef = B10000000000000000000004; };
+        B10000000000000000000005 = {isa = PBXBuildFile; fileRef = B10000000000000000000006; };
+        B10000000000000000000007 = {isa = PBXBuildFile; productRef = B10000000000000000000008; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -33,12 +37,17 @@
 /* Begin XCSwiftPackageProductDependency section */
         A10000000000000000000002 = {isa = XCSwiftPackageProductDependency; productName = AgentCore; };
         A10000000000000000000004 = {isa = XCSwiftPackageProductDependency; productName = AgentMCP; };
+        B10000000000000000000008 = {isa = XCSwiftPackageProductDependency; productName = AgentCore; };
 /* End XCSwiftPackageProductDependency section */
 
 /* Begin PBXFileReference section */
 		4EA431952E51056F007D383A /* SimBuddy.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SimBuddy.app; sourceTree = BUILT_PRODUCTS_DIR; };
         A10000000000000000000006 = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MCPLauncher/main.swift; sourceTree = SOURCE_ROOT; };
         A10000000000000000000008 = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; path = "simbuddy-mcp"; sourceTree = BUILT_PRODUCTS_DIR; };
+        B10000000000000000000002 = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimBuddyTests/AgentMonitorTests.swift; sourceTree = SOURCE_ROOT; };
+        B10000000000000000000004 = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimBuddy/ViewModels/AgentMonitor.swift; sourceTree = SOURCE_ROOT; };
+        B10000000000000000000006 = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimBuddy/Services/AgentNotifications.swift; sourceTree = SOURCE_ROOT; };
+        B10000000000000000000009 = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; path = AgentMonitorTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -59,6 +68,7 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
         A10000000000000000000014 = {isa = PBXFrameworksBuildPhase; buildActionMask = 2147483647; files = (A10000000000000000000003, ); runOnlyForDeploymentPostprocessing = 0; };
+        B10000000000000000000011 = {isa = PBXFrameworksBuildPhase; buildActionMask = 2147483647; files = (B10000000000000000000007, ); runOnlyForDeploymentPostprocessing = 0; };
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -66,6 +76,7 @@
 			isa = PBXGroup;
 			children = (
 				4EA431972E51056F007D383A /* SimBuddy */,
+                B10000000000000000000010,
                 A10000000000000000000006,
 				4EA431962E51056F007D383A /* Products */,
 			);
@@ -75,11 +86,13 @@
 			isa = PBXGroup;
 			children = (
 				4EA431952E51056F007D383A /* SimBuddy.app */,
+                B10000000000000000000009,
                 A10000000000000000000008,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
+        B10000000000000000000010 = {isa = PBXGroup; name = AgentMonitorTests; children = (B10000000000000000000002, B10000000000000000000004, B10000000000000000000006, ); sourceTree = "<group>"; };
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -117,6 +130,14 @@
             packageProductDependencies = (A10000000000000000000004, );
             productName = "simbuddy-mcp"; productReference = A10000000000000000000008;
             productType = "com.apple.product-type.tool";
+        };
+        B10000000000000000000013 = {
+            isa = PBXNativeTarget; buildConfigurationList = B10000000000000000000014;
+            buildPhases = (B10000000000000000000012, B10000000000000000000011, );
+            buildRules = (); dependencies = (); name = AgentMonitorTests;
+            packageProductDependencies = (B10000000000000000000008, );
+            productName = AgentMonitorTests; productReference = B10000000000000000000009;
+            productType = "com.apple.product-type.bundle.unit-test";
         };
 /* End PBXNativeTarget section */
 
@@ -178,6 +199,7 @@
 			targets = (
 				4EA431942E51056F007D383A /* SimBuddy */,
                 A10000000000000000000010,
+                B10000000000000000000013,
 			);
 		};
 /* End PBXProject section */
@@ -201,6 +223,7 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
         A10000000000000000000016 = {isa = PBXSourcesBuildPhase; buildActionMask = 2147483647; files = (A10000000000000000000005, ); runOnlyForDeploymentPostprocessing = 0; };
+        B10000000000000000000012 = {isa = PBXSourcesBuildPhase; buildActionMask = 2147483647; files = (B10000000000000000000001, B10000000000000000000003, B10000000000000000000005, ); runOnlyForDeploymentPostprocessing = 0; };
 /* End PBXSourcesBuildPhase section */
 
 /* Begin XCBuildConfiguration section */
@@ -436,6 +459,20 @@
             MACOSX_DEPLOYMENT_TARGET = 26.0; PRODUCT_NAME = "simbuddy-mcp";
             SKIP_INSTALL = YES; SWIFT_VERSION = 6.0; SWIFT_EMIT_LOC_STRINGS = NO;
         }; name = Release; };
+        B10000000000000000000015 = {isa = XCBuildConfiguration; buildSettings = {
+            CODE_SIGN_STYLE = Automatic; DEVELOPMENT_TEAM = HXDK8H2H24; GENERATE_INFOPLIST_FILE = YES;
+            MACOSX_DEPLOYMENT_TARGET = 26.0; PRODUCT_NAME = "$(TARGET_NAME)";
+            PRODUCT_BUNDLE_IDENTIFIER = com.augusto.SimBuddy.AgentMonitorTests;
+            SWIFT_VERSION = 5.0; SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
+            SWIFT_APPROACHABLE_CONCURRENCY = YES; SWIFT_EMIT_LOC_STRINGS = NO;
+        }; name = Debug; };
+        B10000000000000000000016 = {isa = XCBuildConfiguration; buildSettings = {
+            CODE_SIGN_STYLE = Automatic; DEVELOPMENT_TEAM = HXDK8H2H24; GENERATE_INFOPLIST_FILE = YES;
+            MACOSX_DEPLOYMENT_TARGET = 26.0; PRODUCT_NAME = "$(TARGET_NAME)";
+            PRODUCT_BUNDLE_IDENTIFIER = com.augusto.SimBuddy.AgentMonitorTests;
+            SWIFT_VERSION = 5.0; SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
+            SWIFT_APPROACHABLE_CONCURRENCY = YES; SWIFT_EMIT_LOC_STRINGS = NO;
+        }; name = Release; };
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -458,6 +495,7 @@
 			defaultConfigurationName = Release;
 		};
         A10000000000000000000015 = {isa = XCConfigurationList; buildConfigurations = (A10000000000000000000017, A10000000000000000000018, ); defaultConfigurationIsVisible = 0; defaultConfigurationName = Release; };
+        B10000000000000000000014 = {isa = XCConfigurationList; buildConfigurations = (B10000000000000000000015, B10000000000000000000016, ); defaultConfigurationIsVisible = 0; defaultConfigurationName = Release; };
 /* End XCConfigurationList section */
 	};
 	rootObject = 4EA4318D2E51056F007D383A /* Project object */;
